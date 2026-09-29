@@ -1,9 +1,9 @@
 namespace Hotel.Domain.Shared.Enums;
 
 /// <summary>
-/// Тип номеров гостиницы
+/// Категории номеров гостиницы
 /// </summary>
-public enum RoomType 
+public enum RoomCategory
 {
 	/// <summary>
 	/// Эконом

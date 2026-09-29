@@ -4,5 +4,6 @@
 /// Информация о бронировании
 /// </summary>
 public class Booking
-{ 
+{
+
 }

@@ -18,12 +18,12 @@ public class Client
     /// <summary>
     /// Имя
     /// </summary>
-    public required string FirstName { get; set; }
+    public required string Name { get; set; }
 
     /// <summary>
     /// Фамилия
     /// </summary>
-    public required string SecondName { get; set; }
+    public required string Surname { get; set; }
 
     /// <summary>
     /// Отчёство (при наличии)

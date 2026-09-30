@@ -1,6 +1,6 @@
 namespace Hotel.Tests;
 
-public class UnitTest1
+public class HotelTests
 {
     [Fact]
     public void Test1()

@@ -280,39 +280,39 @@ internal class TestData
             Id = 5,
             Client = Clients[8],
             Room = Rooms[0],
-            CheckInDate = new DateOnly(2026, 9, 1),
-            DaysOfStay = 5
+            CheckInDate = new DateOnly(2026, 7, 2),
+            DaysOfStay = 1
         },
         new()
         {
             Id = 6,
             Client = Clients[4],
             Room = Rooms[9],
-            CheckInDate = new DateOnly(2026, 9, 1),
-            DaysOfStay = 5
+            CheckInDate = new DateOnly(2025, 12, 28),
+            DaysOfStay = 7
         },
         new()
         {
             Id = 7,
             Client = Clients[9],
             Room = Rooms[1],
-            CheckInDate = new DateOnly(2026, 9, 1),
-            DaysOfStay = 5
+            CheckInDate = new DateOnly(2025, 6, 10),
+            DaysOfStay = 2
         },
         new()
         {
             Id = 8,
             Client = Clients[3],
             Room = Rooms[2],
-            CheckInDate = new DateOnly(2026, 9, 1),
-            DaysOfStay = 5
+            CheckInDate = new DateOnly(2026, 4, 14),
+            DaysOfStay = 3
         },
         new()
         {
             Id = 9,
             Client = Clients[6],
             Room = Rooms[4],
-            CheckInDate = new DateOnly(2026, 9, 1),
+            CheckInDate = new DateOnly(2025, 11, 25),
             DaysOfStay = 5
         },
         new()
@@ -321,30 +321,30 @@ internal class TestData
             Client = Clients[5],
             Room = Rooms[3],
             CheckInDate = new DateOnly(2026, 9, 1),
-            DaysOfStay = 5
-        },
-        new()
-        {
-            Id = 10,
-            Client = Clients[0],
-            Room = Rooms[9],
-            CheckInDate = new DateOnly(2026, 9, 1),
-            DaysOfStay = 5
-        },
-        new()
-        {
-            Id = 10,
-            Client = Clients[4],
-            Room = Rooms[8],
-            CheckInDate = new DateOnly(2026, 9, 1),
-            DaysOfStay = 5
+            DaysOfStay = 4
         },
         new()
         {
             Id = 10,
             Client = Clients[0],
             Room = Rooms[5],
-            CheckInDate = new DateOnly(2026, 9, 1),
+            CheckInDate = new DateOnly(2026, 7, 21),
+            DaysOfStay = 3
+        },
+        new()
+        {
+            Id = 10,
+            Client = Clients[4],
+            Room = Rooms[8],
+            CheckInDate = new DateOnly(2026, 3, 31),
+            DaysOfStay = 4
+        },
+        new()
+        {
+            Id = 10,
+            Client = Clients[0],
+            Room = Rooms[5],
+            CheckInDate = new DateOnly(2026, 2, 12),
             DaysOfStay = 5
         }
     ];

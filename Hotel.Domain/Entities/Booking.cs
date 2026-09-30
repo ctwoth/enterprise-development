@@ -31,7 +31,7 @@ public class Booking
     public required Room Room { get; set; }
 
     /// <summary>
-    /// Информация о бронировании
+    /// Итоговая цена проживания
     /// </summary>
     public double TotalPrice => Room.RoomType.DayPrice * DaysOfStay;
 }

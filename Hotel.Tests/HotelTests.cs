@@ -15,15 +15,17 @@ public class HotelTests
     [Fact]
     public void GetClientsByRoomType()
     {
-        List<Client> expected = [ TestData.Clients[5], TestData.Clients[2], TestData.Clients[7] ];
+        List<int> expectedClientIds = [6, 3, 8];
         var roomType = TestData.RoomTypes[5];
 
         var result = TestData.Bookings
             .Where(booking => booking.Room.Type == roomType)
             .Select(booking => booking.Client)
-            .OrderBy(client => client.Surname).ToList();
+            .OrderBy(client => client.Surname)
+            .Select(client => client.Id)
+            .ToList();
 
-        Assert.Equal(result, expected);
+        Assert.Equal(result, expectedClientIds);
     }
 
     /// <summary>
@@ -32,17 +34,17 @@ public class HotelTests
     [Fact]
     public void GetBookedRooms()
     {
-        List<Room> expected = [ TestData.Rooms[6], TestData.Rooms[3] ];
+        List<int> expectedRoomIds = [7, 4];
         var date = new DateOnly(2026, 1, 25);
         
         var result = TestData.Bookings
             .Where(booking => 
                 (booking.CheckInDate <= date) && 
                 (booking.CheckInDate.AddDays((int)booking.DaysOfStay) >= date))
-            .Select(booking => booking.Room)
+            .Select(booking => booking.Room.Id)
             .ToList();
 
-        Assert.Equal(result, expected);
+        Assert.Equal(result, expectedRoomIds);
     }
 
     /// <summary>
@@ -51,24 +53,17 @@ public class HotelTests
     [Fact]
     public void GetTop5MostPopularRooms()
     {
-        List<Room> expected = 
-        [
-            TestData.Rooms[5],
-            TestData.Rooms[6],
-            TestData.Rooms[2],
-            TestData.Rooms[3],
-            TestData.Rooms[0]
-        ];
+        List<int> expectedRoomIds = [6, 7, 3, 4, 1];
         
         var result = TestData.Bookings
             .GroupBy(booking => booking.Room)
             .OrderBy(rooms => rooms.Count())
             .Reverse()
             .Take(5)
-            .Select(rooms => rooms.Key)
+            .Select(rooms => rooms.Key.Id)
             .ToList();
         
-        Assert.Equal(result, expected);
+        Assert.Equal(result, expectedRoomIds);
     }
 
     /// <summary>
@@ -77,7 +72,7 @@ public class HotelTests
     [Fact]
     public void GetBookingCountOfEveryRoom()
     {
-        List<int> expected = [ 2, 2, 2, 1, 1, 3, 3, 1 ];
+        List<int> expectedBookingCount = [ 2, 2, 2, 1, 1, 3, 3, 1 ];
 
         var result = TestData.Bookings
             .GroupBy(booking => booking.Room.Number)
@@ -85,7 +80,7 @@ public class HotelTests
             .Select(group => group.Count())
             .ToList();
 
-        Assert.Equal(expected, result);
+        Assert.Equal(result, expectedBookingCount);
     }
 
     /// <summary>
@@ -94,23 +89,16 @@ public class HotelTests
     [Fact]
     public void GetTop5MostRichClients()
     {
-        List<Client> expected = 
-        [
-            TestData.Clients[4],
-            TestData.Clients[0],
-            TestData.Clients[5],
-            TestData.Clients[7],
-            TestData.Clients[2],
-        ];
+        List<int> expectedClientIds = [5, 1, 6, 8, 3];
 
         var result = TestData.Bookings
             .GroupBy(booking => booking.Client)
             .OrderBy(group => group.Sum(booking => booking.TotalPrice))
             .Reverse()
-            .Select(group => group.Key)
+            .Select(group => group.Key.Id)
             .Take(5)
             .ToList();
 
-        Assert.Equal(expected, result);
+        Assert.Equal(result, expectedClientIds);
     }
 }

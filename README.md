@@ -28,4 +28,4 @@
 ## Запуск тестов
 
 ```bash
-dotnet test HotelSolution.slnx --no-build --verbosity normal
+dotnet test Hotel.slnx --no-build --verbosity normal

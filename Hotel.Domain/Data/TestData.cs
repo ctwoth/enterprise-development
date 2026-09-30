@@ -264,7 +264,7 @@ internal class TestData
             Id = 3,
             Client = Clients[7],
             Room = Rooms[3],
-            CheckInDate = new DateOnly(2025, 10, 13),
+            CheckInDate = new DateOnly(2026, 1, 22),
             DaysOfStay = 4
         },
         new()
@@ -280,7 +280,7 @@ internal class TestData
             Id = 5,
             Client = Clients[8],
             Room = Rooms[0],
-            CheckInDate = new DateOnly(2026, 7, 2),
+            CheckInDate = new DateOnly(2026, 4, 15),
             DaysOfStay = 1
         },
         new()

@@ -6,7 +6,7 @@ namespace Hotel.Domain.Data;
 /// <summary>
 /// 
 /// </summary>
-internal class TestData
+public static class TestData
 {
     /// <summary>
     /// Типы гостиничных номеров
@@ -325,26 +325,42 @@ internal class TestData
         },
         new()
         {
-            Id = 10,
+            Id = 11,
             Client = Clients[0],
-            Room = Rooms[5],
+            Room = Rooms[6],
             CheckInDate = new DateOnly(2026, 7, 21),
             DaysOfStay = 3
         },
         new()
         {
-            Id = 10,
+            Id = 12,
             Client = Clients[4],
-            Room = Rooms[8],
+            Room = Rooms[6],
             CheckInDate = new DateOnly(2026, 3, 31),
             DaysOfStay = 4
         },
         new()
         {
-            Id = 10,
-            Client = Clients[0],
+            Id = 13,
+            Client = Clients[7],
             Room = Rooms[5],
             CheckInDate = new DateOnly(2026, 2, 12),
+            DaysOfStay = 5
+        },
+        new()
+        {
+            Id = 14,
+            Client = Clients[5],
+            Room = Rooms[5],
+            CheckInDate = new DateOnly(2026, 3, 17),
+            DaysOfStay = 5
+        },
+        new()
+        {
+            Id = 15,
+            Client = Clients[2],
+            Room = Rooms[5],
+            CheckInDate = new DateOnly(2026, 8, 3),
             DaysOfStay = 5
         }
     ];

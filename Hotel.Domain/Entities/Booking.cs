@@ -5,5 +5,33 @@
 /// </summary>
 public class Booking
 {
+    /// <summary>
+    /// Идентификатор Брони
+    /// </summary>
+    public required int Id { get; set; }
 
+    /// <summary>
+    /// Заселяющийся клиент
+    /// </summary>
+    public required Client Client { get; set; }
+
+    /// <summary>
+    /// Дата заезда
+    /// </summary>
+    public required DateOnly CheckInDate { get; set; }
+
+    /// <summary>
+    /// Колличество дней проживания
+    /// </summary>
+    public required uint DaysOfStay { get; set; }
+
+    /// <summary>
+    /// Бронируемая комната
+    /// </summary>
+    public required Room Room { get; set; }
+
+    /// <summary>
+    /// Информация о бронировании
+    /// </summary>
+    public double TotalPrice => Room.RoomType.DayPrice * DaysOfStay;
 }

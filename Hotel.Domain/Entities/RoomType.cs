@@ -35,7 +35,7 @@ public class RoomType
     /// <summary>
     /// Цена прожиания за сутки
     /// </summary>
-    public required double Price { get; set; }
+    public required double DayPrice { get; set; }
 
     /// <summary>
     /// Категория комнаты

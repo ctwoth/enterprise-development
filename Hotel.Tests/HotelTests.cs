@@ -1,6 +1,5 @@
 using Hotel.Domain.Data;
 using Xunit;
-using Hotel.Domain.Entities;
 
 namespace Hotel.Tests;
 
@@ -36,10 +35,10 @@ public class HotelTests
     {
         List<int> expectedRoomIds = [7, 4];
         var date = new DateOnly(2026, 1, 25);
-        
+
         var result = TestData.Bookings
-            .Where(booking => 
-                (booking.CheckInDate <= date) && 
+            .Where(booking =>
+                (booking.CheckInDate <= date) &&
                 (booking.CheckInDate.AddDays((int)booking.DaysOfStay) >= date))
             .Select(booking => booking.Room.Id)
             .ToList();
@@ -54,7 +53,7 @@ public class HotelTests
     public void GetTop5MostPopularRooms()
     {
         List<int> expectedRoomIds = [6, 7, 3, 4, 1];
-        
+
         var result = TestData.Bookings
             .GroupBy(booking => booking.Room)
             .OrderBy(rooms => rooms.Count())
@@ -62,7 +61,7 @@ public class HotelTests
             .Take(5)
             .Select(rooms => rooms.Key.Id)
             .ToList();
-        
+
         Assert.Equal(result, expectedRoomIds);
     }
 
@@ -72,7 +71,7 @@ public class HotelTests
     [Fact]
     public void GetBookingCountOfEveryRoom()
     {
-        List<int> expectedBookingCount = [ 2, 2, 2, 1, 1, 3, 3, 1 ];
+        List<int> expectedBookingCount = [2, 2, 2, 1, 1, 3, 3, 1];
 
         var result = TestData.Bookings
             .GroupBy(booking => booking.Room.Number)

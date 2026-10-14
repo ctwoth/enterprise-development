@@ -56,8 +56,7 @@ public class HotelTests
 
         var result = TestData.Bookings
             .GroupBy(booking => booking.Room)
-            .OrderBy(rooms => rooms.Count())
-            .Reverse()
+            .OrderByDescending(rooms => rooms.Count())
             .Take(5)
             .Select(rooms => rooms.Key.Id)
             .ToList();
@@ -92,8 +91,7 @@ public class HotelTests
 
         var result = TestData.Bookings
             .GroupBy(booking => booking.Client)
-            .OrderBy(group => group.Sum(booking => booking.TotalPrice))
-            .Reverse()
+            .OrderByDescending(group => group.Sum(booking => booking.TotalPrice))
             .Select(group => group.Key.Id)
             .Take(5)
             .ToList();

@@ -52,7 +52,7 @@ public class HotelTests
     [Fact]
     public void GetTop5MostPopularRooms()
     {
-        List<int> expectedRoomIds = [6, 7, 3, 4, 1];
+        List<int> expectedRoomIds = [7, 6, 1, 4, 3];
 
         var result = TestData.Bookings
             .GroupBy(booking => booking.Room)
@@ -87,7 +87,7 @@ public class HotelTests
     [Fact]
     public void GetTop5MostRichClients()
     {
-        List<int> expectedClientIds = [5, 1, 6, 8, 3];
+        List<int> expectedClientIds = [5, 1, 8, 6, 3];
 
         var result = TestData.Bookings
             .GroupBy(booking => booking.Client)

@@ -1,16 +1,34 @@
+using Microsoft.EntityFrameworkCore;
+using Hotel.Infrastructure;
+
 namespace Hotel.MigrationService;
 
-public class Worker(ILogger<Worker> logger) : BackgroundService
+public class Worker(
+    ILogger<Worker> logger,
+    IServiceProvider serviceProvider,
+    IHostApplicationLifetime hostApplicationLifetime) : BackgroundService
 {
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
-        while (!stoppingToken.IsCancellationRequested)
+        logger.LogInformation("Выполняю миграции...");
+
+        try
         {
-            if (logger.IsEnabled(LogLevel.Information))
-            {
-                logger.LogInformation("Worker running at: {time}", DateTimeOffset.Now);
-            }
-            await Task.Delay(1000, stoppingToken);
+            using var scope = serviceProvider.CreateScope();
+            var dbContext = scope.ServiceProvider.GetRequiredService<HotelDbContext>();
+
+            await dbContext.Database.MigrateAsync(stoppingToken);
+
+            logger.LogInformation("Миграции успешно применены!");
+        }
+        catch (Exception ex)
+        {
+            logger.LogError(ex, "Произошла ошибка при применении миграций.");
+            throw;
+        }
+        finally
+        {
+            hostApplicationLifetime.StopApplication();
         }
     }
 }

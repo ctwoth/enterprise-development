@@ -1,0 +1,114 @@
+﻿using Hotel.Application.Contracts;
+using Hotel.Application.Contracts.Booking;
+using Hotel.Application.Contracts.Client;
+using Hotel.Domain;
+using Hotel.Domain.Entities;
+using Hotel.Domain.Shared.Enums;
+
+namespace Hotel.Application.Services;
+
+public class AnalyticsService : IAnalyticsService
+{
+    private readonly IRepository<Booking, int> _bookings;
+    private readonly IRepository<Room, int> _rooms;
+
+    public AnalyticsService(
+        IRepository<Booking, int> bookings,
+        IRepository<Room, int> rooms)
+    {
+        _bookings = bookings;
+        _rooms = rooms;
+    }
+
+    public async Task<ClientsByRoomTypeDto> 
+        GetClientsByRoomTypeAsync(RoomCategory category, CancellationToken ct = default)
+    {
+        var bookings = await _bookings.ReadAll(ct);
+
+        var clients = bookings
+            .Where(b => b.Room.Type.Category == category)
+            .Select(b => b.Client)
+            .GroupBy(c => c.Id)
+            .Select(g => g.First())
+            .OrderBy(c => c.Surname)
+            .ThenBy(c => c.Name)
+            .ThenBy(c => c.Patronymic)
+            .Select(c => new ClientResponseDto(
+                c.Id, c.Name, c.Surname, c.Patronymic, c.PassportNumber, c.BirthDate, c.Citizenship))
+            .ToList();
+
+        return new ClientsByRoomTypeDto(category, clients);
+    }
+
+    public async Task<IEnumerable<BookingResponseDto>> 
+        GetCurrentBookingsAsync(CancellationToken ct = default)
+    {
+        var today = DateOnly.FromDateTime(DateTime.Today);
+        var bookings = await _bookings.ReadAll(ct);
+
+        return bookings
+            .Where(b => b.CheckInDate <= today && b.CheckInDate.AddDays((int)b.DaysOfStay) > today)
+            .Select(b => new BookingResponseDto(
+                b.Id, 
+                b.Client.Id, 
+                b.Client.Name, 
+                b.Client.Surname, 
+                b.Client.Patronymic,
+                b.Room.Id, 
+                b.Room.Number, 
+                b.CheckInDate, 
+                b.DaysOfStay, 
+                b.TotalPrice
+                ))
+            .ToList();
+    }
+
+    public async Task<IEnumerable<RoomBookingCountDto>> 
+        GetTop5FrequentlyBookedRoomsAsync(CancellationToken ct = default)
+    {
+        var bookings = await _bookings.ReadAll(ct);
+
+        return bookings
+            .GroupBy(b => b.Room)
+            .Select(g => new RoomBookingCountDto(g.Key.Id, g.Key.Number, g.Count()))
+            .OrderByDescending(r => r.BookingCount)
+            .Take(5)
+            .ToList();
+    }
+
+    public async Task<IEnumerable<RoomBookingCountDto>> 
+        GetBookingCountForEachRoomAsync(CancellationToken ct = default)
+    {
+        var rooms = await _rooms.ReadAll(ct);
+        var bookings = await _bookings.ReadAll(ct);
+
+        return rooms.Select(r => new RoomBookingCountDto(
+                r.Id,
+                r.Number,
+                bookings.Count(b => b.Room.Id == r.Id)))
+            .ToList();
+    }
+
+    public async Task<IEnumerable<ClientTotalSpentDto>> 
+        GetTop5ClientsByTotalSpentAsync(CancellationToken ct = default)
+    {
+        var bookings = await _bookings.ReadAll(ct);
+
+        return bookings
+            .GroupBy(b => b.Client)
+            .Select(g => new ClientTotalSpentDto(
+                new ClientResponseDto(
+                    g.Key.Id, 
+                    g.Key.Name, 
+                    g.Key.Surname, 
+                    g.Key.Patronymic,
+                    g.Key.PassportNumber,
+                    g.Key.BirthDate,
+                    g.Key.Citizenship
+                    ),
+                g.Sum(b => b.TotalPrice)))
+            .OrderByDescending(c => c.TotalSpent)
+            .Take(5)
+            .ToList();
+    }
+}

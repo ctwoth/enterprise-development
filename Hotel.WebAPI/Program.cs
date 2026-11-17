@@ -1,10 +1,12 @@
-using Hotel.Application.Services;
+using Hotel.Application.Contracts;
 using Hotel.Application.Contracts.Booking;
 using Hotel.Application.Contracts.Client;
 using Hotel.Application.Contracts.Room;
 using Hotel.Application.Contracts.RoomType;
+using Hotel.Application.Services;
 using Hotel.Domain;
 using Hotel.Infrastructure;
+using Hotel.ServiceDefaults;
 using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -19,6 +21,7 @@ builder.Services.AddScoped<IBookingService, BookingService>();
 builder.Services.AddScoped<IClientService, ClientService>();
 builder.Services.AddScoped<IRoomService, RoomService>();
 builder.Services.AddScoped<IRoomTypeService, RoomTypeService>();
+builder.Services.AddScoped<IAnalyticsService, AnalyticsService>();
 
 builder.Services.AddControllers()
     .AddJsonOptions(options =>

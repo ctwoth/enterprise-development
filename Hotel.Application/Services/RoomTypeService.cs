@@ -62,7 +62,7 @@ public class RoomTypeService : IRoomTypeService
         if (dto.HasShower is not null) type.HasShower = dto.HasShower.Value;
         if (dto.HasBath is not null) type.HasBath = dto.HasBath.Value;
         if (dto.Category is not null) type.Category = dto.Category.Value;
-        if (dto.DayPrice is not null) type.Area = dto.DayPrice.Value;
+        if (dto.DayPrice is not null) type.DayPrice = dto.DayPrice.Value;
 
         await _roomTypes.Update(type, ct);
         return MapToDto(type);

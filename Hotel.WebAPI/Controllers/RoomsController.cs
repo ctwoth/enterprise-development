@@ -44,7 +44,6 @@ public class RoomsController : ControllerBase
     public async Task<IActionResult> Delete(int id, CancellationToken ct)
     {
         var deleted = await _roomService.DeleteAsync(id, ct);
-        var deleted = await _roomService.DeleteAsync(id, ct);
         return deleted ? NoContent() : NotFound();
     }
 }

@@ -9,6 +9,6 @@ var migrationService = builder.AddProject<Projects.Hotel_MigrationService>("migr
 
 var apiService = builder.AddProject<Projects.Hotel_WebAPI>("apiservice")
     .WithReference(hotelDb)
-    .WaitForCompletion(migrationService); // Ключевой момент!
+    .WaitForCompletion(migrationService);
 
 builder.Build().Run();

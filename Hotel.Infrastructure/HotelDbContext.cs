@@ -1,6 +1,5 @@
 ﻿using Hotel.Domain.Data;
 using Hotel.Domain.Entities;
-using Hotel.Domain.Shared.Enums;
 using Microsoft.EntityFrameworkCore;
 
 namespace Hotel.Infrastructure;

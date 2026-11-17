@@ -10,7 +10,7 @@ public class RoomType
     /// <summary>
     /// Идентификатор комнаты
     /// </summary>
-    public required int Id { get; set; }
+    public int Id { get; set; }
 
     /// <summary>
     /// Площадь комнаты

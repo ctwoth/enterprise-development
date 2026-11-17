@@ -5,9 +5,9 @@ namespace Hotel.Application.Contracts.RoomType;
 public record RoomTypeResponseDto(
     int Id,
     double Area,
-    int Beds,
+    uint Beds,
     bool HasBath,
     bool HasShower,
-    decimal DayPrice,
+    double DayPrice,
     RoomCategory Category
 );

@@ -2,7 +2,7 @@
 
 public record RoomCreateUpdateDto(
     uint? Number,
-    int? Floor,
+    uint? Floor,
     bool? HasBalcony,
     int? RoomTypeId
 );

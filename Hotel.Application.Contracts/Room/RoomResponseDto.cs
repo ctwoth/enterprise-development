@@ -3,9 +3,9 @@
 public record RoomResponseDto(
     int Id,
     uint Number,
-    int Floor,
+    uint Floor,
     bool HasBalcony,
     int RoomTypeId,
     string RoomTypeName,
-    decimal DayPrice
+    double DayPrice
 );

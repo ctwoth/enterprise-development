@@ -8,7 +8,7 @@ public class Booking
     /// <summary>
     /// Идентификатор Брони
     /// </summary>
-    public required int Id { get; set; }
+    public int Id { get; set; }
 
     /// <summary>
     /// Заселяющийся клиент

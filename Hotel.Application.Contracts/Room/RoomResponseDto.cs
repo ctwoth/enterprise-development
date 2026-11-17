@@ -1,4 +1,6 @@
-﻿namespace Hotel.Application.Contracts.Room;
+﻿using Hotel.Domain.Shared.Enums;
+
+namespace Hotel.Application.Contracts.Room;
 
 public record RoomResponseDto(
     int Id,
@@ -6,6 +8,6 @@ public record RoomResponseDto(
     uint Floor,
     bool HasBalcony,
     int RoomTypeId,
-    string RoomTypeName,
+    RoomCategory RoomTypeName,
     double DayPrice
 );

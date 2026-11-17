@@ -15,10 +15,6 @@ public class HotelDbContext(DbContextOptions<HotelDbContext> options) : DbContex
     {
         base.OnModelCreating(modelBuilder);
 
-        modelBuilder.Entity<RoomType>()
-                    .Property(rt => rt.Category)
-                    .HasConversion<string>();
-
         var bookings = modelBuilder.Entity<Booking>();
         bookings.HasOne(b => b.Client)
                 .WithMany()

@@ -4,16 +4,11 @@ using Hotel.Application.Mappers;
 namespace Hotel.Application.Services;
 
 public class BookingService(
-    IBookingRepository bookings,
-    IClientRepository clients,
-    IRoomRepository rooms
+    IBookingRepository _bookings,
+    IClientRepository _clients,
+    IRoomRepository _rooms
     ) : IBookingService
 {
-    private readonly IBookingRepository _bookings = bookings;
-    private readonly IClientRepository _clients = clients;
-    private readonly IRoomRepository _rooms = rooms;
-
-
     public async Task<IEnumerable<BookingResponseDto>> GetAllAsync(CancellationToken ct = default)
     {
         var bookings = await _bookings.ReadAll(ct);

@@ -2,10 +2,9 @@
 using Hotel.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 
-public class BookingRepository : EfRepository<Booking, int>, IBookingRepository
+public class BookingRepository(HotelDbContext context) :
+    EfRepository<Booking, int>(context), IBookingRepository
 {
-    public BookingRepository(HotelDbContext context) : base(context) { }
-
     public async Task<bool> HasOverlappingBookingAsync(int roomId, DateOnly checkIn, uint days, CancellationToken ct = default)
     {
         var checkOut = checkIn.AddDays((int)days);

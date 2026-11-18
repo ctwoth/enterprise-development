@@ -3,18 +3,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Hotel.Infrastructure;
 
-public class EfRepository<T, TId> : IRepository<T, TId>
+public class EfRepository<T, TId>(HotelDbContext Context) : IRepository<T, TId>
     where T : class
     where TId : struct
 {
-    protected readonly HotelDbContext Context;
-    protected readonly DbSet<T> DbSet;
-
-    public EfRepository(HotelDbContext context)
-    {
-        Context = context;
-        DbSet = context.Set<T>();
-    }
+    protected readonly DbSet<T> DbSet = Context.Set<T>();
 
     public virtual async Task<T?> Read(TId id, CancellationToken ct = default)
         => await DbSet.FindAsync(new object?[] { id }, ct);

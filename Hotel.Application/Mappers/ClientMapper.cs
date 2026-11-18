@@ -1,9 +1,5 @@
-﻿using Hex1b.Surfaces;
-using Hotel.Application.Contracts.Booking;
-using Hotel.Application.Contracts.Client;
-using Hotel.Application.Contracts.Room;
+﻿using Hotel.Application.Contracts.Client;
 using Hotel.Domain.Entities;
-using System.Xml.Linq;
 
 namespace Hotel.Application.Mappers;
 

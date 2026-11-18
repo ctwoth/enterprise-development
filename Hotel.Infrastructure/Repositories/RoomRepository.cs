@@ -2,7 +2,6 @@
 using Hotel.Infrastructure;
 
 
-public class RoomRepository : EfRepository<Room, int>, IRoomRepository
-{
-    public RoomRepository(HotelDbContext context) : base(context) { }
-}
+public class RoomRepository(HotelDbContext context) :
+    EfRepository<Room, int>(context), IRoomRepository
+{ }

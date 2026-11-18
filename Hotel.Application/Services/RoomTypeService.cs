@@ -4,10 +4,8 @@ using Hotel.Domain.Shared.Enums;
 
 namespace Hotel.Application.Services;
 
-public class RoomTypeService(IRoomTypeRepository roomTypes) : IRoomTypeService
+public class RoomTypeService(IRoomTypeRepository _roomTypes) : IRoomTypeService
 {
-    private readonly IRoomTypeRepository _roomTypes = roomTypes;
-
     public async Task<IEnumerable<RoomTypeResponseDto>> GetAllAsync(CancellationToken ct = default)
     {
         var rooms = await _roomTypes.ReadAll(ct);

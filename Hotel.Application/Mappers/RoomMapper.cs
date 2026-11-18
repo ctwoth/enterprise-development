@@ -1,5 +1,4 @@
-﻿using Hotel.Application.Contracts.Booking;
-using Hotel.Application.Contracts.Room;
+﻿using Hotel.Application.Contracts.Room;
 using Hotel.Domain.Entities;
 
 namespace Hotel.Application.Mappers;

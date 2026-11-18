@@ -3,10 +3,8 @@ using Hotel.Application.Mappers;
 
 namespace Hotel.Application.Services;
 
-public class ClientService(IClientRepository clients) : IClientService
+public class ClientService(IClientRepository _clients) : IClientService
 {
-    private readonly IClientRepository _clients = clients;
-
     public async Task<IEnumerable<ClientResponseDto>> GetAllAsync(CancellationToken ct = default)
     {
         var clients = await _clients.ReadAll(ct);

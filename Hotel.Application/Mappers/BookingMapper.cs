@@ -3,6 +3,9 @@ using Hotel.Domain.Entities;
 
 namespace Hotel.Application.Mappers;
 
+/// <summary>
+/// Маппер для перевода Booking в DTO и наоборот
+/// </summary>
 public static class BookingMapper
 {
     public static BookingResponseDto ToDto(Booking b) => new(
@@ -18,7 +21,7 @@ public static class BookingMapper
         b.TotalPrice
     );
 
-        public static Booking ToEntity(BookingCreateUpdateDto dto, Client client, Room room) => new()
+    public static Booking ToEntity(BookingCreateUpdateDto dto, Client client, Room room) => new()
     {
         Client = client,
         Room = room,

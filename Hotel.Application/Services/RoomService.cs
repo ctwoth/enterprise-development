@@ -5,11 +5,8 @@ using Hotel.Domain.Entities;
 
 namespace Hotel.Application.Services;
 
-public class RoomService(IRoomRepository rooms, IRoomTypeRepository roomTypes) : IRoomService
+public class RoomService(IRoomRepository _rooms, IRoomTypeRepository _roomTypes) : IRoomService
 {
-    private readonly IRoomRepository _rooms = rooms;
-    private readonly IRoomTypeRepository _roomTypes = roomTypes;
-
     public async Task<IEnumerable<RoomResponseDto>> GetAllAsync(CancellationToken ct = default)
     {
         var rooms = await _rooms.ReadAll(ct);

@@ -1,18 +1,12 @@
 ﻿using Hotel.Application.Contracts;
 using Hotel.Application.Contracts.Booking;
 using Hotel.Application.Mappers;
-using Hotel.Domain;
-using Hotel.Domain.Entities;
 using Hotel.Domain.Shared.Enums;
 
 namespace Hotel.Application.Services;
 
-public class AnalyticsService(IBookingRepository bookings, IRoomRepository rooms) : IAnalyticsService
+public class AnalyticsService(IBookingRepository _bookings, IRoomRepository _rooms) : IAnalyticsService
 {
-    private readonly IBookingRepository _bookings = bookings;
-    private readonly IRoomRepository _rooms = rooms;
-
-
     public async Task<ClientsByRoomTypeDto>
         GetClientsByRoomTypeAsync(RoomCategory category, CancellationToken ct = default)
     {

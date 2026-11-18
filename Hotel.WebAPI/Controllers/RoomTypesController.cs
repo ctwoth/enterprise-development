@@ -2,16 +2,29 @@
 using Microsoft.AspNetCore.Mvc;
 
 namespace Hotel.WebAPI.Controllers;
-
+/// <summary>
+/// Контроллер для CRUD операций над типами комнат
+/// </summary>
+/// <param name="roomTypeService">Интерфейс службы</param>
 [ApiController]
 [Route("api/[controller]")]
 public class RoomTypesController(IRoomTypeService roomTypeService) : ControllerBase
 {
+    /// <summary>
+    /// Получение всех типов комнат
+    /// </summary>
+    /// <param name="ct">Токен для отмены операции</param>
+    /// <returns>Коллекция типов комнат</returns>
     [HttpGet]
     [ProducesResponseType(200)]
     public async Task<IActionResult> GetAll(CancellationToken ct)
         => Ok(await roomTypeService.GetAllAsync(ct));
-
+    /// <summary>
+    /// Получение информации  о типе комнат
+    /// </summary>
+    /// <param name="id">Id типа</param>
+    /// <param name="ct">Токен для отмены операции</param>
+    /// <returns>Тип комнат</returns>
     [HttpGet("{id}")]
     [ProducesResponseType(200)]
     [ProducesResponseType(404)]
@@ -20,7 +33,12 @@ public class RoomTypesController(IRoomTypeService roomTypeService) : ControllerB
         var result = await roomTypeService.GetByIdAsync(id, ct);
         return result is null ? NotFound() : Ok(result);
     }
-
+    /// <summary>
+    /// Создание типа комнат
+    /// </summary>
+    /// <param name="dto">DTO для создания типа</param>
+    /// <param name="ct">Токен для отмены операции</param>
+    /// <returns>Созданный тип кимнат</returns>
     [HttpPost]
     [ProducesResponseType(201)]
     public async Task<IActionResult> Create(RoomTypeCreateUpdateDto dto, CancellationToken ct)
@@ -28,7 +46,13 @@ public class RoomTypesController(IRoomTypeService roomTypeService) : ControllerB
         var created = await roomTypeService.CreateAsync(dto, ct);
         return CreatedAtAction(nameof(GetById), new { id = created.Id }, created);
     }
-
+    /// <summary>
+    /// Получение информации о типе комнат
+    /// </summary>
+    /// <param name="id">Id типа</param>
+    /// <param name="dto">DTO для обновления типа</param>
+    /// <param name="ct">Токен для отмены операции</param>
+    /// <returns>обновлённый тип комнат</returns>
     [HttpPut("{id}")]
     [ProducesResponseType(200)]
     [ProducesResponseType(404)]
@@ -37,7 +61,12 @@ public class RoomTypesController(IRoomTypeService roomTypeService) : ControllerB
         var updated = await roomTypeService.UpdateAsync(id, dto, ct);
         return updated is null ? NotFound() : Ok(updated);
     }
-
+    /// <summary>
+    /// Удаления типа комнат
+    /// </summary>
+    /// <param name="id">Id типа</param>
+    /// <param name="ct">Токен для отмены операции</param>
+    /// <returns>статус-код</returns>
     [HttpDelete("{id}")]
     [ProducesResponseType(204)]
     [ProducesResponseType(404)]

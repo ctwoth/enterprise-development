@@ -35,7 +35,7 @@ public class HotelDbContext(DbContextOptions<HotelDbContext> options) : DbContex
         bookings.Navigation(b => b.Room).AutoInclude();
         modelBuilder.Entity<Room>().Navigation(r => r.Type).AutoInclude();
 
-        bookings.HasIndex(b => new { b.Room.Id, b.CheckInDate })
+        bookings.HasIndex("RoomId", nameof(Booking.CheckInDate))
                 .IsUnique()
                 .HasDatabaseName("idx_Bookings_Room_CheckInDate");
 

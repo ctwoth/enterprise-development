@@ -1,35 +1,29 @@
 ﻿using Hotel.Application.Contracts.Booking;
-using Hotel.Domain;
-using Hotel.Domain.Entities;
+using Hotel.Application.Mappers;
 
 namespace Hotel.Application.Services;
 
-public class BookingService : IBookingService
+public class BookingService(
+    IBookingRepository bookings,
+    IClientRepository clients,
+    IRoomRepository rooms
+    ) : IBookingService
 {
-    private readonly IBookingRepository _bookings;
-    private readonly IRepository<Client, int> _clients;
-    private readonly IRepository<Room, int> _rooms;
+    private readonly IBookingRepository _bookings = bookings;
+    private readonly IClientRepository _clients = clients;
+    private readonly IRoomRepository _rooms = rooms;
 
-    public BookingService(
-        IBookingRepository bookings,
-        IRepository<Client, int> clients,
-        IRepository<Room, int> rooms)
-    {
-        _bookings = bookings;
-        _clients = clients;
-        _rooms = rooms;
-    }
 
     public async Task<IEnumerable<BookingResponseDto>> GetAllAsync(CancellationToken ct = default)
     {
         var bookings = await _bookings.ReadAll(ct);
-        return bookings.Select(MapToDto);
+        return bookings.Select(b => BookingMapper.ToDto(b));
     }
 
     public async Task<BookingResponseDto?> GetByIdAsync(int id, CancellationToken ct = default)
     {
         var booking = await _bookings.Read(id, ct);
-        return booking is null ? null : MapToDto(booking);
+        return booking is null ? null : BookingMapper.ToDto(booking);
     }
 
     public async Task<BookingResponseDto> CreateAsync(BookingCreateUpdateDto dto, CancellationToken ct = default)
@@ -52,16 +46,10 @@ public class BookingService : IBookingService
         if (await _bookings.HasOverlappingBookingAsync(roomId, checkInDate, daysOfStay, ct))
             throw new InvalidOperationException("На выбранные даты номер уже занят.");
 
-        var booking = new Booking
-        {
-            Client = client,
-            Room = room,
-            CheckInDate = dto.CheckInDate.Value,
-            DaysOfStay = dto.DaysOfStay.Value
-        };
+        var booking = BookingMapper.ToEntity(dto, client, room);
 
         await _bookings.Create(booking, ct);
-        return MapToDto(booking);
+        return BookingMapper.ToDto(booking);
     }
 
     public async Task<BookingResponseDto?> UpdateAsync(int id, BookingCreateUpdateDto dto, CancellationToken ct = default)
@@ -85,22 +73,9 @@ public class BookingService : IBookingService
         if (dto.DaysOfStay is not null) booking.DaysOfStay = dto.DaysOfStay.Value;
 
         await _bookings.Update(booking, ct);
-        return MapToDto(booking);
+        return BookingMapper.ToDto(booking);
     }
 
     public async Task<bool> DeleteAsync(int id, CancellationToken ct = default)
         => await _bookings.Delete(id, ct);
-
-    private static BookingResponseDto MapToDto(Booking b) => new(
-        b.Id,
-        b.Client.Id,
-        b.Client.Name,
-        b.Client.Surname,
-        b.Client.Patronymic,
-        b.Room.Id,
-        b.Room.Number,
-        b.CheckInDate,
-        b.DaysOfStay,
-        b.TotalPrice
-    );
 }

@@ -1,54 +1,40 @@
 ﻿using Hotel.Application.Contracts.Client;
-using Hotel.Domain;
-using Hotel.Domain.Entities;
+using Hotel.Application.Mappers;
 
 namespace Hotel.Application.Services;
 
-public class ClientService : IClientService
+public class ClientService(IClientRepository clients) : IClientService
 {
-    private readonly IRepository<Client, int> _clients;
-
-    public ClientService(IRepository<Client, int> clients)
-    {
-        _clients = clients;
-    }
+    private readonly IClientRepository _clients = clients;
 
     public async Task<IEnumerable<ClientResponseDto>> GetAllAsync(CancellationToken ct = default)
     {
         var clients = await _clients.ReadAll(ct);
-        return clients.Select(MapToDto);
+        return clients.Select(c => ClientMapper.ToDto(c));
     }
 
     public async Task<ClientResponseDto?> GetByIdAsync(int id, CancellationToken ct = default)
     {
         var client = await _clients.Read(id, ct);
-        return client is null ? null : MapToDto(client);
+        return client is null ? null : ClientMapper.ToDto(client);
     }
 
     public async Task<ClientResponseDto> CreateAsync(ClientCreateUpdateDto dto, CancellationToken ct = default)
     {
         if (dto is not
             {
-                Name: string name,
-                Surname: string surname,
-                BirthDate: DateOnly birthDate,
-                PassportNumber: string passportNumber,
-                Citizenship: string citizenship
+                Name: string,
+                Surname: string,
+                BirthDate: DateOnly,
+                PassportNumber: string,
+                Citizenship: string
             })
             throw new ArgumentException("Все поля обязательны для заполнения при создании.");
 
-        var client = new Client
-        {
-            Name = name,
-            Surname = surname,
-            Patronymic = dto.Patronymic,
-            BirthDate = birthDate,
-            PassportNumber = passportNumber,
-            Citizenship = citizenship
-        };
+        var client = ClientMapper.ToEntity(dto);
 
         var respose = await _clients.Create(client, ct);
-        return MapToDto(respose);
+        return ClientMapper.ToDto(respose);
     }
 
     public async Task<ClientResponseDto?> UpdateAsync(int id, ClientCreateUpdateDto dto, CancellationToken ct = default)
@@ -64,19 +50,9 @@ public class ClientService : IClientService
         if (dto.Citizenship is not null) client.Citizenship = dto.Citizenship;
 
         await _clients.Update(client, ct);
-        return MapToDto(client);
+        return ClientMapper.ToDto(client);
     }
 
     public async Task<bool> DeleteAsync(int id, CancellationToken ct = default)
         => await _clients.Delete(id, ct);
-
-    private static ClientResponseDto MapToDto(Client c) => new(
-        c.Id,
-        c.Name,
-        c.Surname,
-        c.Patronymic,
-        c.PassportNumber,
-        c.BirthDate,
-        c.Citizenship
-    );
 }

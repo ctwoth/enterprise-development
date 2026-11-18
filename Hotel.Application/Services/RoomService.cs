@@ -1,38 +1,34 @@
 ﻿using Hotel.Application.Contracts.Room;
+using Hotel.Application.Mappers;
 using Hotel.Domain;
 using Hotel.Domain.Entities;
 
 namespace Hotel.Application.Services;
 
-public class RoomService : IRoomService
+public class RoomService(IRoomRepository rooms, IRoomTypeRepository roomTypes) : IRoomService
 {
-    private readonly IRepository<Room, int> _rooms;
-    private readonly IRepository<RoomType, int> _roomTypes;
-    public RoomService(IRepository<Room, int> rooms, IRepository<RoomType, int> roomTypes)
-    {
-        _roomTypes = roomTypes;
-        _rooms = rooms;
-    }
+    private readonly IRoomRepository _rooms = rooms;
+    private readonly IRoomTypeRepository _roomTypes = roomTypes;
 
     public async Task<IEnumerable<RoomResponseDto>> GetAllAsync(CancellationToken ct = default)
     {
         var rooms = await _rooms.ReadAll(ct);
-        return rooms.Select(MapToDto);
+        return rooms.Select(r => RoomMapper.ToDto(r));
     }
 
     public async Task<RoomResponseDto?> GetByIdAsync(int id, CancellationToken ct = default)
     {
         var room = await _rooms.Read(id, ct);
-        return room is null ? null : MapToDto(room);
+        return room is null ? null : RoomMapper.ToDto(room);
     }
 
     public async Task<RoomResponseDto> CreateAsync(RoomCreateUpdateDto dto, CancellationToken ct = default)
     {
         if (dto is not
             {
-                Floor: uint floor,
-                HasBalcony: bool hasBalcony,
-                Number: uint number,
+                Floor: uint,
+                HasBalcony: bool,
+                Number: uint,
                 RoomTypeId: int typeId
             })
             throw new ArgumentException("Все поля обязательны для заполнения при создании.");
@@ -41,16 +37,10 @@ public class RoomService : IRoomService
         if (type is null)
             throw new ArgumentException("Типа комнаты с таким id не существует.");
 
-        var room = new Room
-        {
-            Floor = floor,
-            HasBalcony = hasBalcony,
-            Number = number,
-            Type = type,
-        };
+        var room = RoomMapper.ToEntity(dto, type);
 
         var response = await _rooms.Create(room, ct);
-        return MapToDto(response);
+        return RoomMapper.ToDto(response);
     }
 
     public async Task<RoomResponseDto?> UpdateAsync(int id, RoomCreateUpdateDto dto, CancellationToken ct = default)
@@ -68,19 +58,9 @@ public class RoomService : IRoomService
         }
 
         await _rooms.Update(room, ct);
-        return MapToDto(room);
+        return RoomMapper.ToDto(room);
     }
 
     public async Task<bool> DeleteAsync(int id, CancellationToken ct = default)
         => await _rooms.Delete(id, ct);
-
-    private static RoomResponseDto MapToDto(Room r) => new(
-        r.Id,
-        r.Number,
-        r.Floor,
-        r.HasBalcony,
-        r.Type.Id,
-        r.Type.Category,
-        r.Type.DayPrice
-    );
 }

@@ -1,55 +1,42 @@
 ﻿using Hotel.Application.Contracts.RoomType;
-using Hotel.Domain;
-using Hotel.Domain.Entities;
+using Hotel.Application.Mappers;
 using Hotel.Domain.Shared.Enums;
 
 namespace Hotel.Application.Services;
 
-public class RoomTypeService : IRoomTypeService
+public class RoomTypeService(IRoomTypeRepository roomTypes) : IRoomTypeService
 {
-    private readonly IRepository<RoomType, int> _roomTypes;
-    public RoomTypeService(IRepository<RoomType, int> roomTypes)
-    {
-        _roomTypes = roomTypes;
-    }
+    private readonly IRoomTypeRepository _roomTypes = roomTypes;
 
     public async Task<IEnumerable<RoomTypeResponseDto>> GetAllAsync(CancellationToken ct = default)
     {
         var rooms = await _roomTypes.ReadAll(ct);
-        return rooms.Select(MapToDto);
+        return rooms.Select(rt => RoomTypeMapper.ToDto(rt));
     }
 
     public async Task<RoomTypeResponseDto?> GetByIdAsync(int id, CancellationToken ct = default)
     {
         var room = await _roomTypes.Read(id, ct);
-        return room is null ? null : MapToDto(room);
+        return room is null ? null : RoomTypeMapper.ToDto(room);
     }
 
     public async Task<RoomTypeResponseDto> CreateAsync(RoomTypeCreateUpdateDto dto, CancellationToken ct = default)
     {
         if (dto is not
             {
-                Area: double area,
-                Beds: uint beds,
-                HasShower: bool hasShower,
-                HasBath: bool hasBath,
-                Category: RoomCategory category,
-                DayPrice: double dayPrive
+                Area: double,
+                Beds: uint,
+                HasShower: bool,
+                HasBath: bool,
+                Category: RoomCategory,
+                DayPrice: double
             })
             throw new ArgumentException("Все поля обязательны для заполнения при создании.");
 
-        var type = new RoomType
-        {
-            Area = dto.Area.Value,
-            Beds = dto.Beds.Value,
-            HasShower = dto.HasShower.Value,
-            HasBath = dto.HasBath.Value,
-            Category = dto.Category.Value,
-            DayPrice = dto.DayPrice.Value
-        };
+        var type = RoomTypeMapper.ToEntity(dto);
 
         var respose = await _roomTypes.Create(type, ct);
-        return MapToDto(respose);
+        return RoomTypeMapper.ToDto(respose);
     }
 
     public async Task<RoomTypeResponseDto?> UpdateAsync(int id, RoomTypeCreateUpdateDto dto, CancellationToken ct = default)
@@ -65,19 +52,9 @@ public class RoomTypeService : IRoomTypeService
         if (dto.DayPrice is not null) type.DayPrice = dto.DayPrice.Value;
 
         await _roomTypes.Update(type, ct);
-        return MapToDto(type);
+        return RoomTypeMapper.ToDto(type);
     }
 
     public async Task<bool> DeleteAsync(int id, CancellationToken ct = default)
         => await _roomTypes.Delete(id, ct);
-
-    private static RoomTypeResponseDto MapToDto(RoomType t) => new(
-        t.Id,
-        t.Area,
-        t.Beds,
-        t.HasBath,
-        t.HasShower,
-        t.DayPrice,
-        t.Category
-    );
 }

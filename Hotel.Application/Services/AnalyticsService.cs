@@ -1,24 +1,17 @@
 ﻿using Hotel.Application.Contracts;
 using Hotel.Application.Contracts.Booking;
-using Hotel.Application.Contracts.Client;
+using Hotel.Application.Mappers;
 using Hotel.Domain;
 using Hotel.Domain.Entities;
 using Hotel.Domain.Shared.Enums;
 
 namespace Hotel.Application.Services;
 
-public class AnalyticsService : IAnalyticsService
+public class AnalyticsService(IBookingRepository bookings, IRoomRepository rooms) : IAnalyticsService
 {
-    private readonly IRepository<Booking, int> _bookings;
-    private readonly IRepository<Room, int> _rooms;
+    private readonly IBookingRepository _bookings = bookings;
+    private readonly IRoomRepository _rooms = rooms;
 
-    public AnalyticsService(
-        IRepository<Booking, int> bookings,
-        IRepository<Room, int> rooms)
-    {
-        _bookings = bookings;
-        _rooms = rooms;
-    }
 
     public async Task<ClientsByRoomTypeDto>
         GetClientsByRoomTypeAsync(RoomCategory category, CancellationToken ct = default)
@@ -33,8 +26,7 @@ public class AnalyticsService : IAnalyticsService
             .OrderBy(c => c.Surname)
             .ThenBy(c => c.Name)
             .ThenBy(c => c.Patronymic)
-            .Select(c => new ClientResponseDto(
-                c.Id, c.Name, c.Surname, c.Patronymic, c.PassportNumber, c.BirthDate, c.Citizenship))
+            .Select(c => ClientMapper.ToDto(c))
             .ToList();
 
         return new ClientsByRoomTypeDto(category, clients);
@@ -48,18 +40,7 @@ public class AnalyticsService : IAnalyticsService
 
         return bookings
             .Where(b => b.CheckInDate <= today && b.CheckInDate.AddDays((int)b.DaysOfStay) > today)
-            .Select(b => new BookingResponseDto(
-                b.Id,
-                b.Client.Id,
-                b.Client.Name,
-                b.Client.Surname,
-                b.Client.Patronymic,
-                b.Room.Id,
-                b.Room.Number,
-                b.CheckInDate,
-                b.DaysOfStay,
-                b.TotalPrice
-                ))
+            .Select(b => BookingMapper.ToDto(b))
             .ToList();
     }
 
@@ -96,17 +77,7 @@ public class AnalyticsService : IAnalyticsService
 
         return bookings
             .GroupBy(b => b.Client)
-            .Select(g => new ClientTotalSpentDto(
-                new ClientResponseDto(
-                    g.Key.Id,
-                    g.Key.Name,
-                    g.Key.Surname,
-                    g.Key.Patronymic,
-                    g.Key.PassportNumber,
-                    g.Key.BirthDate,
-                    g.Key.Citizenship
-                    ),
-                g.Sum(b => b.TotalPrice)))
+            .Select(g => new ClientTotalSpentDto(ClientMapper.ToDto(g.Key), g.Sum(b => b.TotalPrice)))
             .OrderByDescending(c => c.TotalSpent)
             .Take(5)
             .ToList();

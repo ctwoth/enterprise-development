@@ -1,6 +1,4 @@
-﻿using Hotel.Application.Contracts.Booking;
-using Hotel.Application.Contracts.Room;
-using Hotel.Application.Contracts.RoomType;
+﻿using Hotel.Application.Contracts.RoomType;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Hotel.WebAPI.Controllers;

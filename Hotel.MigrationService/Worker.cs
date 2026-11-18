@@ -1,5 +1,5 @@
-using Microsoft.EntityFrameworkCore;
 using Hotel.Infrastructure;
+using Microsoft.EntityFrameworkCore;
 
 namespace Hotel.MigrationService;
 

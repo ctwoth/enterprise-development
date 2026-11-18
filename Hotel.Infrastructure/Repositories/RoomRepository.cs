@@ -1,5 +1,4 @@
-﻿using Hotel.Domain;
-using Hotel.Domain.Entities;
+﻿using Hotel.Domain.Entities;
 using Hotel.Infrastructure;
 
 

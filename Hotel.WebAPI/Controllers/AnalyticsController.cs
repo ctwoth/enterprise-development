@@ -1,5 +1,4 @@
 ﻿using Hotel.Application.Contracts;
-using Hotel.Domain.Shared;
 using Hotel.Domain.Shared.Enums;
 using Microsoft.AspNetCore.Mvc;
 

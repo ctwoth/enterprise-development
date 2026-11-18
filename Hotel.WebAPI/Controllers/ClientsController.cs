@@ -1,5 +1,4 @@
 ﻿using Hotel.Application.Contracts.Client;
-using Hotel.Application.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Hotel.WebAPI.Controllers;

@@ -1,5 +1,4 @@
-﻿using Hotel.Application.Contracts.Booking;
-using Hotel.Application.Contracts.Client;
+﻿using Hotel.Application.Contracts.Client;
 using Hotel.Domain;
 using Hotel.Domain.Entities;
 

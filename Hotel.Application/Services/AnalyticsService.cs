@@ -20,7 +20,7 @@ public class AnalyticsService : IAnalyticsService
         _rooms = rooms;
     }
 
-    public async Task<ClientsByRoomTypeDto> 
+    public async Task<ClientsByRoomTypeDto>
         GetClientsByRoomTypeAsync(RoomCategory category, CancellationToken ct = default)
     {
         var bookings = await _bookings.ReadAll(ct);
@@ -40,7 +40,7 @@ public class AnalyticsService : IAnalyticsService
         return new ClientsByRoomTypeDto(category, clients);
     }
 
-    public async Task<IEnumerable<BookingResponseDto>> 
+    public async Task<IEnumerable<BookingResponseDto>>
         GetCurrentBookingsAsync(CancellationToken ct = default)
     {
         var today = DateOnly.FromDateTime(DateTime.Today);
@@ -49,21 +49,21 @@ public class AnalyticsService : IAnalyticsService
         return bookings
             .Where(b => b.CheckInDate <= today && b.CheckInDate.AddDays((int)b.DaysOfStay) > today)
             .Select(b => new BookingResponseDto(
-                b.Id, 
-                b.Client.Id, 
-                b.Client.Name, 
-                b.Client.Surname, 
+                b.Id,
+                b.Client.Id,
+                b.Client.Name,
+                b.Client.Surname,
                 b.Client.Patronymic,
-                b.Room.Id, 
-                b.Room.Number, 
-                b.CheckInDate, 
-                b.DaysOfStay, 
+                b.Room.Id,
+                b.Room.Number,
+                b.CheckInDate,
+                b.DaysOfStay,
                 b.TotalPrice
                 ))
             .ToList();
     }
 
-    public async Task<IEnumerable<RoomBookingCountDto>> 
+    public async Task<IEnumerable<RoomBookingCountDto>>
         GetTop5FrequentlyBookedRoomsAsync(CancellationToken ct = default)
     {
         var bookings = await _bookings.ReadAll(ct);
@@ -76,7 +76,7 @@ public class AnalyticsService : IAnalyticsService
             .ToList();
     }
 
-    public async Task<IEnumerable<RoomBookingCountDto>> 
+    public async Task<IEnumerable<RoomBookingCountDto>>
         GetBookingCountForEachRoomAsync(CancellationToken ct = default)
     {
         var rooms = await _rooms.ReadAll(ct);
@@ -89,7 +89,7 @@ public class AnalyticsService : IAnalyticsService
             .ToList();
     }
 
-    public async Task<IEnumerable<ClientTotalSpentDto>> 
+    public async Task<IEnumerable<ClientTotalSpentDto>>
         GetTop5ClientsByTotalSpentAsync(CancellationToken ct = default)
     {
         var bookings = await _bookings.ReadAll(ct);
@@ -98,9 +98,9 @@ public class AnalyticsService : IAnalyticsService
             .GroupBy(b => b.Client)
             .Select(g => new ClientTotalSpentDto(
                 new ClientResponseDto(
-                    g.Key.Id, 
-                    g.Key.Name, 
-                    g.Key.Surname, 
+                    g.Key.Id,
+                    g.Key.Name,
+                    g.Key.Surname,
                     g.Key.Patronymic,
                     g.Key.PassportNumber,
                     g.Key.BirthDate,

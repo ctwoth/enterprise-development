@@ -34,12 +34,12 @@ public class BookingService : IBookingService
 
     public async Task<BookingResponseDto> CreateAsync(BookingCreateUpdateDto dto, CancellationToken ct = default)
     {
-        if (dto is not 
-            { 
-            ClientId: int clientId,
-            RoomId: int roomId,
-            CheckInDate: DateOnly checkInDate,
-            DaysOfStay: uint daysOfStay   
+        if (dto is not
+            {
+                ClientId: int clientId,
+                RoomId: int roomId,
+                CheckInDate: DateOnly checkInDate,
+                DaysOfStay: uint daysOfStay
             })
             throw new ArgumentException("Все поля обязательны для заполнения при создании.");
 

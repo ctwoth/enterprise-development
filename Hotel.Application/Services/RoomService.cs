@@ -1,6 +1,4 @@
-﻿using Hotel.Application.Contracts.Booking;
-using Hotel.Application.Contracts.Client;
-using Hotel.Application.Contracts.Room;
+﻿using Hotel.Application.Contracts.Room;
 using Hotel.Domain;
 using Hotel.Domain.Entities;
 
@@ -30,12 +28,12 @@ public class RoomService : IRoomService
 
     public async Task<RoomResponseDto> CreateAsync(RoomCreateUpdateDto dto, CancellationToken ct = default)
     {
-        if (dto is not 
-            { 
-            Floor: uint floor, 
-            HasBalcony: bool hasBalcony, 
-            Number: uint number, 
-            RoomTypeId: int typeId
+        if (dto is not
+            {
+                Floor: uint floor,
+                HasBalcony: bool hasBalcony,
+                Number: uint number,
+                RoomTypeId: int typeId
             })
             throw new ArgumentException("Все поля обязательны для заполнения при создании.");
 

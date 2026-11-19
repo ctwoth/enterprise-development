@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
-using Microting.EntityFrameworkCore.MySql;
 
 namespace Hotel.Infrastructure;
 

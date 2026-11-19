@@ -7,12 +7,17 @@ using Hotel.Application.Services;
 using Hotel.Domain;
 using Hotel.Infrastructure;
 using Hotel.ServiceDefaults;
+using Microsoft.EntityFrameworkCore;
 using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.AddServiceDefaults();
-builder.AddNpgsqlDbContext<HotelDbContext>("hoteldb");
+builder.Services.AddDbContext<HotelDbContext>(options =>
+{
+    var connectionString = builder.Configuration.GetConnectionString("hoteldb");
+    options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
+});
 
 builder.Services.AddScoped(typeof(IRepository<,>), typeof(EfRepository<,>));
 builder.Services.AddScoped<IBookingRepository, BookingRepository>();

@@ -3,8 +3,8 @@ using System;
 using Hotel.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
@@ -18,29 +18,29 @@ namespace Hotel.Infrastructure.Migrations
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("ProductVersion", "10.0.14")
-                .HasAnnotation("Relational:MaxIdentifierLength", 63);
+                .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
-            NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
+            MySqlModelBuilderExtensions.AutoIncrementColumns(modelBuilder);
 
             modelBuilder.Entity("Hotel.Domain.Entities.Booking", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
+                        .HasColumnType("int");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<DateOnly>("CheckInDate")
                         .HasColumnType("date");
 
                     b.Property<int>("ClientId")
-                        .HasColumnType("integer");
+                        .HasColumnType("int");
 
-                    b.Property<long>("DaysOfStay")
-                        .HasColumnType("bigint");
+                    b.Property<uint>("DaysOfStay")
+                        .HasColumnType("int unsigned");
 
                     b.Property<int>("RoomId")
-                        .HasColumnType("integer");
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -58,7 +58,7 @@ namespace Hotel.Infrastructure.Migrations
                             Id = 1,
                             CheckInDate = new DateOnly(2026, 2, 13),
                             ClientId = 2,
-                            DaysOfStay = 2L,
+                            DaysOfStay = 2u,
                             RoomId = 1
                         },
                         new
@@ -66,7 +66,7 @@ namespace Hotel.Infrastructure.Migrations
                             Id = 2,
                             CheckInDate = new DateOnly(2026, 1, 25),
                             ClientId = 1,
-                            DaysOfStay = 5L,
+                            DaysOfStay = 5u,
                             RoomId = 7
                         },
                         new
@@ -74,7 +74,7 @@ namespace Hotel.Infrastructure.Migrations
                             Id = 3,
                             CheckInDate = new DateOnly(2026, 1, 22),
                             ClientId = 8,
-                            DaysOfStay = 4L,
+                            DaysOfStay = 4u,
                             RoomId = 4
                         },
                         new
@@ -82,7 +82,7 @@ namespace Hotel.Infrastructure.Migrations
                             Id = 4,
                             CheckInDate = new DateOnly(2026, 3, 10),
                             ClientId = 3,
-                            DaysOfStay = 3L,
+                            DaysOfStay = 3u,
                             RoomId = 3
                         },
                         new
@@ -90,7 +90,7 @@ namespace Hotel.Infrastructure.Migrations
                             Id = 5,
                             CheckInDate = new DateOnly(2026, 4, 15),
                             ClientId = 9,
-                            DaysOfStay = 1L,
+                            DaysOfStay = 1u,
                             RoomId = 1
                         },
                         new
@@ -98,7 +98,7 @@ namespace Hotel.Infrastructure.Migrations
                             Id = 6,
                             CheckInDate = new DateOnly(2025, 12, 28),
                             ClientId = 5,
-                            DaysOfStay = 7L,
+                            DaysOfStay = 7u,
                             RoomId = 10
                         },
                         new
@@ -106,7 +106,7 @@ namespace Hotel.Infrastructure.Migrations
                             Id = 7,
                             CheckInDate = new DateOnly(2025, 6, 10),
                             ClientId = 10,
-                            DaysOfStay = 2L,
+                            DaysOfStay = 2u,
                             RoomId = 2
                         },
                         new
@@ -114,7 +114,7 @@ namespace Hotel.Infrastructure.Migrations
                             Id = 8,
                             CheckInDate = new DateOnly(2026, 4, 14),
                             ClientId = 4,
-                            DaysOfStay = 3L,
+                            DaysOfStay = 3u,
                             RoomId = 3
                         },
                         new
@@ -122,7 +122,7 @@ namespace Hotel.Infrastructure.Migrations
                             Id = 9,
                             CheckInDate = new DateOnly(2025, 11, 25),
                             ClientId = 7,
-                            DaysOfStay = 5L,
+                            DaysOfStay = 5u,
                             RoomId = 5
                         },
                         new
@@ -130,7 +130,7 @@ namespace Hotel.Infrastructure.Migrations
                             Id = 10,
                             CheckInDate = new DateOnly(2026, 9, 1),
                             ClientId = 6,
-                            DaysOfStay = 4L,
+                            DaysOfStay = 4u,
                             RoomId = 4
                         },
                         new
@@ -138,7 +138,7 @@ namespace Hotel.Infrastructure.Migrations
                             Id = 11,
                             CheckInDate = new DateOnly(2026, 7, 21),
                             ClientId = 1,
-                            DaysOfStay = 3L,
+                            DaysOfStay = 3u,
                             RoomId = 7
                         },
                         new
@@ -146,7 +146,7 @@ namespace Hotel.Infrastructure.Migrations
                             Id = 12,
                             CheckInDate = new DateOnly(2026, 3, 31),
                             ClientId = 5,
-                            DaysOfStay = 4L,
+                            DaysOfStay = 4u,
                             RoomId = 7
                         },
                         new
@@ -154,7 +154,7 @@ namespace Hotel.Infrastructure.Migrations
                             Id = 13,
                             CheckInDate = new DateOnly(2026, 2, 12),
                             ClientId = 8,
-                            DaysOfStay = 5L,
+                            DaysOfStay = 5u,
                             RoomId = 6
                         },
                         new
@@ -162,7 +162,7 @@ namespace Hotel.Infrastructure.Migrations
                             Id = 14,
                             CheckInDate = new DateOnly(2026, 3, 17),
                             ClientId = 6,
-                            DaysOfStay = 5L,
+                            DaysOfStay = 5u,
                             RoomId = 6
                         },
                         new
@@ -170,7 +170,7 @@ namespace Hotel.Infrastructure.Migrations
                             Id = 15,
                             CheckInDate = new DateOnly(2026, 8, 3),
                             ClientId = 3,
-                            DaysOfStay = 5L,
+                            DaysOfStay = 5u,
                             RoomId = 6
                         });
                 });
@@ -179,31 +179,31 @@ namespace Hotel.Infrastructure.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
+                        .HasColumnType("int");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<DateOnly>("BirthDate")
                         .HasColumnType("date");
 
                     b.Property<string>("Citizenship")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("longtext");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("longtext");
 
                     b.Property<string>("PassportNumber")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("varchar(255)");
 
                     b.Property<string>("Patronymic")
-                        .HasColumnType("text");
+                        .HasColumnType("longtext");
 
                     b.Property<string>("Surname")
                         .IsRequired()
-                        .HasColumnType("text");
+                        .HasColumnType("longtext");
 
                     b.HasKey("Id");
 
@@ -318,21 +318,21 @@ namespace Hotel.Infrastructure.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
+                        .HasColumnType("int");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<long>("Floor")
-                        .HasColumnType("bigint");
+                    b.Property<uint>("Floor")
+                        .HasColumnType("int unsigned");
 
                     b.Property<bool>("HasBalcony")
-                        .HasColumnType("boolean");
+                        .HasColumnType("tinyint(1)");
 
-                    b.Property<long>("Number")
-                        .HasColumnType("bigint");
+                    b.Property<uint>("Number")
+                        .HasColumnType("int unsigned");
 
                     b.Property<int>("RoomTypeId")
-                        .HasColumnType("integer");
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
@@ -344,81 +344,81 @@ namespace Hotel.Infrastructure.Migrations
                         new
                         {
                             Id = 1,
-                            Floor = 1L,
+                            Floor = 1u,
                             HasBalcony = false,
-                            Number = 11L,
+                            Number = 11u,
                             RoomTypeId = 1
                         },
                         new
                         {
                             Id = 2,
-                            Floor = 2L,
+                            Floor = 2u,
                             HasBalcony = true,
-                            Number = 21L,
+                            Number = 21u,
                             RoomTypeId = 2
                         },
                         new
                         {
                             Id = 3,
-                            Floor = 1L,
+                            Floor = 1u,
                             HasBalcony = false,
-                            Number = 12L,
+                            Number = 12u,
                             RoomTypeId = 3
                         },
                         new
                         {
                             Id = 4,
-                            Floor = 1L,
+                            Floor = 1u,
                             HasBalcony = false,
-                            Number = 13L,
+                            Number = 13u,
                             RoomTypeId = 4
                         },
                         new
                         {
                             Id = 5,
-                            Floor = 2L,
+                            Floor = 2u,
                             HasBalcony = true,
-                            Number = 22L,
+                            Number = 22u,
                             RoomTypeId = 5
                         },
                         new
                         {
                             Id = 6,
-                            Floor = 3L,
+                            Floor = 3u,
                             HasBalcony = true,
-                            Number = 23L,
+                            Number = 23u,
                             RoomTypeId = 6
                         },
                         new
                         {
                             Id = 7,
-                            Floor = 3L,
+                            Floor = 3u,
                             HasBalcony = true,
-                            Number = 31L,
+                            Number = 31u,
                             RoomTypeId = 7
                         },
                         new
                         {
                             Id = 8,
-                            Floor = 2L,
+                            Floor = 2u,
                             HasBalcony = true,
-                            Number = 11L,
+                            Number = 11u,
                             RoomTypeId = 8
                         },
                         new
                         {
                             Id = 9,
-                            Floor = 4L,
+                            Floor = 4u,
                             HasBalcony = true,
-                            Number = 41L,
+                            Number = 41u,
                             RoomTypeId = 9
                         },
                         new
                         {
                             Id = 10,
-                            Floor = 4L,
+                            Floor = 4u,
                             HasBalcony = true,
-                            Number = 42L,
+                            Number = 42u,
                             RoomTypeId = 10
                         });
                 });
@@ -427,27 +427,27 @@ namespace Hotel.Infrastructure.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
+                        .HasColumnType("int");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+                    MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<double>("Area")
-                        .HasColumnType("double precision");
+                        .HasColumnType("double");
 
-                    b.Property<long>("Beds")
-                        .HasColumnType("bigint");
+                    b.Property<uint>("Beds")
+                        .HasColumnType("int unsigned");
 
                     b.Property<int>("Category")
-                        .HasColumnType("integer");
+                        .HasColumnType("int");
 
                     b.Property<double>("DayPrice")
-                        .HasColumnType("double precision");
+                        .HasColumnType("double");
 
                     b.Property<bool>("HasBath")
-                        .HasColumnType("boolean");
+                        .HasColumnType("tinyint(1)");
 
                     b.Property<bool>("HasShower")
-                        .HasColumnType("boolean");
+                        .HasColumnType("tinyint(1)");
 
                     b.HasKey("Id");
 
@@ -458,7 +458,7 @@ namespace Hotel.Infrastructure.Migrations
                         {
                             Id = 1,
                             Area = 15.0,
-                            Beds = 1L,
+                            Beds = 1u,
                             Category = 0,
                             DayPrice = 2000.0,
                             HasBath = false,
@@ -468,7 +468,7 @@ namespace Hotel.Infrastructure.Migrations
                         {
                             Id = 2,
                             Area = 19.0,
-                            Beds = 1L,
+                            Beds = 1u,
                             Category = 0,
                             DayPrice = 2600.0,
                             HasBath = false,
@@ -478,7 +478,7 @@ namespace Hotel.Infrastructure.Migrations
                         {
                             Id = 3,
                             Area = 22.0,
-                            Beds = 1L,
+                            Beds = 1u,
                             Category = 1,
                             DayPrice = 3000.0,
                             HasBath = false,
@@ -488,7 +488,7 @@ namespace Hotel.Infrastructure.Migrations
                         {
                             Id = 4,
                             Area = 25.0,
-                            Beds = 1L,
+                            Beds = 1u,
                             Category = 1,
                             DayPrice = 3200.0,
                             HasBath = true,
@@ -498,7 +498,7 @@ namespace Hotel.Infrastructure.Migrations
                         {
                             Id = 5,
                             Area = 28.0,
-                            Beds = 2L,
+                            Beds = 2u,
                             Category = 1,
                             DayPrice = 3600.0,
                             HasBath = true,
@@ -508,7 +508,7 @@ namespace Hotel.Infrastructure.Migrations
                         {
                             Id = 6,
                             Area = 32.0,
-                            Beds = 1L,
+                            Beds = 1u,
                             Category = 3,
                             DayPrice = 4000.0,
                             HasBath = true,
@@ -518,7 +518,7 @@ namespace Hotel.Infrastructure.Migrations
                         {
                             Id = 7,
                             Area = 35.0,
-                            Beds = 2L,
+                            Beds = 2u,
                             Category = 3,
                             DayPrice = 4800.0,
                             HasBath = true,
@@ -528,7 +528,7 @@ namespace Hotel.Infrastructure.Migrations
                         {
                             Id = 8,
                             Area = 40.0,
-                            Beds = 2L,
+                            Beds = 2u,
                             Category = 4,
                             DayPrice = 6000.0,
                             HasBath = true,
@@ -538,7 +538,7 @@ namespace Hotel.Infrastructure.Migrations
                         {
                             Id = 9,
                             Area = 50.0,
-                            Beds = 3L,
+                            Beds = 3u,
                             Category = 4,
                             DayPrice = 8000.0,
                             HasBath = true,
@@ -548,7 +548,7 @@ namespace Hotel.Infrastructure.Migrations
                         {
                             Id = 10,
                             Area = 65.0,
-                            Beds = 3L,
+                            Beds = 3u,
                             Category = 5,
                             DayPrice = 12000.0,
                             HasBath = true,

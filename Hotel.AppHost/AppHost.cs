@@ -1,6 +1,6 @@
 var builder = DistributedApplication.CreateBuilder(args);
 
-var postgres = builder.AddPostgres("postgres");
+var postgres = builder.AddMySql("mysql");
 var hotelDb = postgres.AddDatabase("hoteldb");
 
 var migrationService = builder.AddProject<Projects.Hotel_MigrationService>("migrationservice")

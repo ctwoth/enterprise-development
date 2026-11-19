@@ -1,6 +1,7 @@
 ﻿using Hotel.Domain.Shared.Enums;
 
 namespace Hotel.Application.Contracts.RoomType;
+
 /// <summary>
 /// DTO для GET запросов к типам номеров
 /// </summary>

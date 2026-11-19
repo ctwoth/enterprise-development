@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 
 namespace Hotel.WebAPI.Controllers;
+
 /// <summary>
 /// Контроллер для CRUD операций над номерами
 /// </summary>
@@ -19,6 +20,7 @@ public class RoomsController(IRoomService roomService) : ControllerBase
     [ProducesResponseType(200)]
     public async Task<IActionResult> GetAll(CancellationToken ct)
         => Ok(await roomService.GetAllAsync(ct));
+    
     /// <summary>
     /// Получение информации о номере
     /// </summary>
@@ -33,6 +35,7 @@ public class RoomsController(IRoomService roomService) : ControllerBase
         var result = await roomService.GetByIdAsync(id, ct);
         return result is null ? NotFound() : Ok(result);
     }
+    
     /// <summary>
     /// Создание номера
     /// </summary>
@@ -46,6 +49,7 @@ public class RoomsController(IRoomService roomService) : ControllerBase
         var created = await roomService.CreateAsync(dto, ct);
         return CreatedAtAction(nameof(GetById), new { id = created.Id }, created);
     }
+    
     /// <summary>
     /// Обновление информации о номере
     /// </summary>
@@ -61,6 +65,7 @@ public class RoomsController(IRoomService roomService) : ControllerBase
         var updated = await roomService.UpdateAsync(id, dto, ct);
         return updated is null ? NotFound() : Ok(updated);
     }
+    
     /// <summary>
     /// Удаление номера
     /// </summary>

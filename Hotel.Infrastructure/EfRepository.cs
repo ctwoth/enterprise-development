@@ -13,12 +13,15 @@ public class EfRepository<T, TId>(HotelDbContext Context) : IRepository<T, TId>
     where TId : struct
 {
     protected readonly DbSet<T> DbSet = Context.Set<T>();
+
     /// <inheritdoc/>
     public virtual async Task<T?> Read(TId id, CancellationToken ct = default)
         => await DbSet.FindAsync(new object?[] { id }, ct);
+
     /// <inheritdoc/>
     public virtual async Task<IList<T>> ReadAll(CancellationToken ct = default)
         => await DbSet.ToListAsync(ct);
+
     /// <inheritdoc/>
     public virtual async Task<T> Create(T entity, CancellationToken ct = default)
     {
@@ -26,6 +29,7 @@ public class EfRepository<T, TId>(HotelDbContext Context) : IRepository<T, TId>
         await Context.SaveChangesAsync(ct);
         return result.Entity;
     }
+
     /// <inheritdoc/>
     public virtual async Task<T> Update(T entity, CancellationToken ct = default)
     {
@@ -33,6 +37,7 @@ public class EfRepository<T, TId>(HotelDbContext Context) : IRepository<T, TId>
         await Context.SaveChangesAsync(ct);
         return entity;
     }
+
     /// <inheritdoc/>
     public virtual async Task<bool> Delete(TId id, CancellationToken ct = default)
     {

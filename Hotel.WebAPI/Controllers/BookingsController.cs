@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 
 namespace Hotel.WebAPI.Controllers;
+
 /// <summary>
 /// Контроллер для CRUD операций над бронированиями
 /// </summary>
@@ -19,6 +20,7 @@ public class BookingsController(IBookingService bookingService) : ControllerBase
     [ProducesResponseType(200)]
     public async Task<IActionResult> GetAll(CancellationToken ct)
         => Ok(await bookingService.GetAllAsync(ct));
+    
     /// <summary>
     /// Получение записи о брони
     /// </summary>
@@ -33,6 +35,7 @@ public class BookingsController(IBookingService bookingService) : ControllerBase
         var result = await bookingService.GetByIdAsync(id, ct);
         return result is null ? NotFound() : Ok(result);
     }
+    
     /// <summary>
     /// Создание записи о бронировании
     /// </summary>
@@ -46,6 +49,7 @@ public class BookingsController(IBookingService bookingService) : ControllerBase
         var created = await bookingService.CreateAsync(dto, ct);
         return CreatedAtAction(nameof(GetById), new { id = created.Id }, created);
     }
+   
     /// <summary>
     /// Обновление записи бронирования
     /// </summary>
@@ -61,6 +65,7 @@ public class BookingsController(IBookingService bookingService) : ControllerBase
         var updated = await bookingService.UpdateAsync(id, dto, ct);
         return updated is null ? NotFound() : Ok(updated);
     }
+    
     /// <summary>
     /// Удаление брони
     /// </summary>

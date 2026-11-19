@@ -1,6 +1,7 @@
 ﻿namespace Hotel.Application.Contracts.RoomType;
 
 using Hotel.Domain.Shared.Enums;
+
 /// <summary>
 /// DTO для PUT/POST запросов к типам номеров
 /// </summary>

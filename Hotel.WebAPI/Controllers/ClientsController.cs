@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 
 namespace Hotel.WebAPI.Controllers;
+
 /// <summary>
 /// Контроллер для CRUD операций над клиентами
 /// </summary>
@@ -19,6 +20,7 @@ public class ClientsController(IClientService clientService) : ControllerBase
     [ProducesResponseType(200)]
     public async Task<IActionResult> GetAll(CancellationToken ct)
         => Ok(await clientService.GetAllAsync(ct));
+    
     /// <summary>
     /// Получение информации о клиенте
     /// </summary>
@@ -33,6 +35,7 @@ public class ClientsController(IClientService clientService) : ControllerBase
         var result = await clientService.GetByIdAsync(id, ct);
         return result is null ? NotFound() : Ok(result);
     }
+    
     /// <summary>
     /// Создание клиента
     /// </summary>
@@ -46,6 +49,7 @@ public class ClientsController(IClientService clientService) : ControllerBase
         var created = await clientService.CreateAsync(dto, ct);
         return CreatedAtAction(nameof(GetById), new { id = created.Id }, created);
     }
+    
     /// <summary>
     /// Обновление информации о клиенте
     /// </summary>
@@ -61,6 +65,7 @@ public class ClientsController(IClientService clientService) : ControllerBase
         var updated = await clientService.UpdateAsync(id, dto, ct);
         return updated is null ? NotFound() : Ok(updated);
     }
+    
     /// <summary>
     /// Удаление клиента
     /// </summary>

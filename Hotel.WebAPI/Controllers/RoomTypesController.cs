@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 
 namespace Hotel.WebAPI.Controllers;
+
 /// <summary>
 /// Контроллер для CRUD операций над типами комнат
 /// </summary>
@@ -19,6 +20,7 @@ public class RoomTypesController(IRoomTypeService roomTypeService) : ControllerB
     [ProducesResponseType(200)]
     public async Task<IActionResult> GetAll(CancellationToken ct)
         => Ok(await roomTypeService.GetAllAsync(ct));
+    
     /// <summary>
     /// Получение информации  о типе комнат
     /// </summary>
@@ -33,6 +35,7 @@ public class RoomTypesController(IRoomTypeService roomTypeService) : ControllerB
         var result = await roomTypeService.GetByIdAsync(id, ct);
         return result is null ? NotFound() : Ok(result);
     }
+    
     /// <summary>
     /// Создание типа комнат
     /// </summary>
@@ -46,6 +49,7 @@ public class RoomTypesController(IRoomTypeService roomTypeService) : ControllerB
         var created = await roomTypeService.CreateAsync(dto, ct);
         return CreatedAtAction(nameof(GetById), new { id = created.Id }, created);
     }
+    
     /// <summary>
     /// Получение информации о типе комнат
     /// </summary>
@@ -61,6 +65,7 @@ public class RoomTypesController(IRoomTypeService roomTypeService) : ControllerB
         var updated = await roomTypeService.UpdateAsync(id, dto, ct);
         return updated is null ? NotFound() : Ok(updated);
     }
+    
     /// <summary>
     /// Удаления типа комнат
     /// </summary>

@@ -1,5 +1,6 @@
 ﻿using Hotel.Domain;
 using Hotel.Domain.Entities;
+
 /// <summary>
 /// Наследник базового репозитория для бронирований с доп методом
 /// </summary>

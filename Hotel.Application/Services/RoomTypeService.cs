@@ -4,20 +4,27 @@ using Hotel.Domain.Shared.Enums;
 
 namespace Hotel.Application.Services;
 
+/// <summary>
+/// Реализация службы CRUD операций для типов номеров
+/// </summary>
+/// <param name="_roomTypes">Репозиторий типов номеров</param>
 public class RoomTypeService(IRoomTypeRepository _roomTypes) : IRoomTypeService
 {
+    /// <inheritdoc/>
     public async Task<IEnumerable<RoomTypeResponseDto>> GetAllAsync(CancellationToken ct = default)
     {
         var rooms = await _roomTypes.ReadAll(ct);
         return rooms.Select(rt => RoomTypeMapper.ToDto(rt));
     }
-
+    
+    /// <inheritdoc/>
     public async Task<RoomTypeResponseDto?> GetByIdAsync(int id, CancellationToken ct = default)
     {
         var room = await _roomTypes.Read(id, ct);
         return room is null ? null : RoomTypeMapper.ToDto(room);
     }
-
+    
+    /// <inheritdoc/>
     public async Task<RoomTypeResponseDto> CreateAsync(RoomTypeCreateUpdateDto dto, CancellationToken ct = default)
     {
         if (dto is not
@@ -36,7 +43,8 @@ public class RoomTypeService(IRoomTypeRepository _roomTypes) : IRoomTypeService
         var respose = await _roomTypes.Create(type, ct);
         return RoomTypeMapper.ToDto(respose);
     }
-
+    
+    /// <inheritdoc/>
     public async Task<RoomTypeResponseDto?> UpdateAsync(int id, RoomTypeCreateUpdateDto dto, CancellationToken ct = default)
     {
         var type = await _roomTypes.Read(id, ct);
@@ -52,7 +60,8 @@ public class RoomTypeService(IRoomTypeRepository _roomTypes) : IRoomTypeService
         await _roomTypes.Update(type, ct);
         return RoomTypeMapper.ToDto(type);
     }
-
+    
+    /// <inheritdoc/>
     public async Task<bool> DeleteAsync(int id, CancellationToken ct = default)
         => await _roomTypes.Delete(id, ct);
 }

@@ -3,24 +3,33 @@ using Hotel.Application.Mappers;
 
 namespace Hotel.Application.Services;
 
+/// <summary>
+/// Реализация службы CRUD операций для клиентов
+/// </summary>
+/// <param name="_bookings">Репозиторий брони</param>
+/// <param name="_clients">Репозиторий клиентов</param>
+/// <param name="_rooms">Репозиторий номеров</param>
 public class BookingService(
     IBookingRepository _bookings,
     IClientRepository _clients,
     IRoomRepository _rooms
     ) : IBookingService
 {
+    /// <inheritdoc/>
     public async Task<IEnumerable<BookingResponseDto>> GetAllAsync(CancellationToken ct = default)
     {
         var bookings = await _bookings.ReadAll(ct);
         return bookings.Select(b => BookingMapper.ToDto(b));
     }
-
+    
+    /// <inheritdoc/>
     public async Task<BookingResponseDto?> GetByIdAsync(int id, CancellationToken ct = default)
     {
         var booking = await _bookings.Read(id, ct);
         return booking is null ? null : BookingMapper.ToDto(booking);
     }
-
+    
+    /// <inheritdoc/>
     public async Task<BookingResponseDto> CreateAsync(BookingCreateUpdateDto dto, CancellationToken ct = default)
     {
         if (dto is not
@@ -46,7 +55,8 @@ public class BookingService(
         await _bookings.Create(booking, ct);
         return BookingMapper.ToDto(booking);
     }
-
+    
+    /// <inheritdoc/>
     public async Task<BookingResponseDto?> UpdateAsync(int id, BookingCreateUpdateDto dto, CancellationToken ct = default)
     {
         var booking = await _bookings.Read(id, ct);
@@ -70,7 +80,8 @@ public class BookingService(
         await _bookings.Update(booking, ct);
         return BookingMapper.ToDto(booking);
     }
-
+    
+    /// <inheritdoc/>
     public async Task<bool> DeleteAsync(int id, CancellationToken ct = default)
         => await _bookings.Delete(id, ct);
 }

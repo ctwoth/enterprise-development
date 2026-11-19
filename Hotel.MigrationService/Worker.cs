@@ -3,6 +3,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Hotel.MigrationService;
 
+/// <summary>
+/// Воркер выполнящий миграцию ДБ
+/// </summary>
 public class Worker(
     ILogger<Worker> logger,
     IServiceProvider serviceProvider,

@@ -4,7 +4,7 @@ using Hotel.Domain.Entities;
 namespace Hotel.Application.Mappers;
 
 /// <summary>
-/// Маппер для перевода Booking в DTO и наоборот
+/// Маппер для перевода бронирований в DTO и наоборот
 /// </summary>
 public static class BookingMapper
 {

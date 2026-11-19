@@ -3,20 +3,27 @@ using Hotel.Application.Mappers;
 
 namespace Hotel.Application.Services;
 
+/// <summary>
+/// Реализация службы CRUD операций для клиентов
+/// </summary>
+/// <param name="_clients">Репозиторий клиентов</param>
 public class ClientService(IClientRepository _clients) : IClientService
 {
+    /// <inheritdoc/>
     public async Task<IEnumerable<ClientResponseDto>> GetAllAsync(CancellationToken ct = default)
     {
         var clients = await _clients.ReadAll(ct);
         return clients.Select(c => ClientMapper.ToDto(c));
     }
-
+    
+    /// <inheritdoc/>
     public async Task<ClientResponseDto?> GetByIdAsync(int id, CancellationToken ct = default)
     {
         var client = await _clients.Read(id, ct);
         return client is null ? null : ClientMapper.ToDto(client);
     }
-
+    
+    /// <inheritdoc/>
     public async Task<ClientResponseDto> CreateAsync(ClientCreateUpdateDto dto, CancellationToken ct = default)
     {
         if (dto is not
@@ -34,7 +41,8 @@ public class ClientService(IClientRepository _clients) : IClientService
         var respose = await _clients.Create(client, ct);
         return ClientMapper.ToDto(respose);
     }
-
+    
+    /// <inheritdoc/>
     public async Task<ClientResponseDto?> UpdateAsync(int id, ClientCreateUpdateDto dto, CancellationToken ct = default)
     {
         var client = await _clients.Read(id, ct);
@@ -50,7 +58,8 @@ public class ClientService(IClientRepository _clients) : IClientService
         await _clients.Update(client, ct);
         return ClientMapper.ToDto(client);
     }
-
+    
+    /// <inheritdoc/>
     public async Task<bool> DeleteAsync(int id, CancellationToken ct = default)
         => await _clients.Delete(id, ct);
 }

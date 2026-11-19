@@ -3,6 +3,9 @@ using Hotel.Domain.Entities;
 
 namespace Hotel.Application.Mappers;
 
+/// <summary>
+/// Маппер для перевода номеров в DTO и наоборот
+/// </summary>
 public static class RoomMapper
 {
     public static RoomResponseDto ToDto(Room r) => new(

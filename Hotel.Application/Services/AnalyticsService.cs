@@ -5,8 +5,14 @@ using Hotel.Domain.Shared.Enums;
 
 namespace Hotel.Application.Services;
 
+/// <summary>
+/// Реализация службы CRUD операций для бронирований
+/// </summary>
+/// <param name="_bookings">Репозиторий брони</param>
+/// <param name="_rooms">Репозиторий номеров</param>
 public class AnalyticsService(IBookingRepository _bookings, IRoomRepository _rooms) : IAnalyticsService
 {
+    /// <inheritdoc/>
     public async Task<ClientsByRoomTypeDto>
         GetClientsByRoomTypeAsync(RoomCategory category, CancellationToken ct = default)
     {
@@ -25,7 +31,8 @@ public class AnalyticsService(IBookingRepository _bookings, IRoomRepository _roo
 
         return new ClientsByRoomTypeDto(category, clients);
     }
-
+    
+    /// <inheritdoc/>
     public async Task<IEnumerable<BookingResponseDto>>
         GetCurrentBookingsAsync(CancellationToken ct = default)
     {
@@ -37,7 +44,8 @@ public class AnalyticsService(IBookingRepository _bookings, IRoomRepository _roo
             .Select(b => BookingMapper.ToDto(b))
             .ToList();
     }
-
+    
+    /// <inheritdoc/>
     public async Task<IEnumerable<RoomBookingCountDto>>
         GetTop5FrequentlyBookedRoomsAsync(CancellationToken ct = default)
     {
@@ -50,7 +58,8 @@ public class AnalyticsService(IBookingRepository _bookings, IRoomRepository _roo
             .Take(5)
             .ToList();
     }
-
+    
+    /// <inheritdoc/>
     public async Task<IEnumerable<RoomBookingCountDto>>
         GetBookingCountForEachRoomAsync(CancellationToken ct = default)
     {
@@ -63,7 +72,8 @@ public class AnalyticsService(IBookingRepository _bookings, IRoomRepository _roo
                 bookings.Count(b => b.Room.Id == r.Id)))
             .ToList();
     }
-
+    
+    /// <inheritdoc/>
     public async Task<IEnumerable<ClientTotalSpentDto>>
         GetTop5ClientsByTotalSpentAsync(CancellationToken ct = default)
     {

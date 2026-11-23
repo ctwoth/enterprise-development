@@ -14,16 +14,18 @@ public class BookingsController(IBookingService bookingService) : ControllerBase
     /// <summary>
     /// Получение всех записей в таблице бронирований
     /// </summary>
+    /// <param name="ct">Токен для отмены операции</param>
     /// <returns>Список бронирований</returns>
     [HttpGet]
     [ProducesResponseType(typeof(IEnumerable<BookingResponseDto>), 200)]
     public async Task<IActionResult> GetAll(CancellationToken ct)
         => Ok(await bookingService.GetAllAsync(ct));
-    
+
     /// <summary>
     /// Получение записи о брони
     /// </summary>
     /// <param name="id">Id бронирования</param>
+    /// <param name="ct">Токен для отмены операции</param>
     /// <returns>Запись бронирования</returns>
     [HttpGet("{id:int}")]
     [ProducesResponseType(typeof(BookingResponseDto), 200)]
@@ -33,10 +35,11 @@ public class BookingsController(IBookingService bookingService) : ControllerBase
         var result = await bookingService.GetByIdAsync(id, ct);
         return result is null ? NotFound() : Ok(result);
     }
-    
+
     /// <summary>
     /// Создание записи о бронировании
     /// </summary>
+    /// <param name="ct">Токен для отмены операции</param>
     /// <param name="dto">DTO для создания бронирования</param>
     /// <returns>Созданная запись о брони</returns>
     [HttpPost]
@@ -61,11 +64,12 @@ public class BookingsController(IBookingService bookingService) : ControllerBase
         var updated = await bookingService.UpdateAsync(id, dto, ct);
         return updated is null ? NotFound() : Ok(updated);
     }
-    
+
     /// <summary>
     /// Удаление брони
     /// </summary>
     /// <param name="id">Id брони</param>
+    /// <param name="ct">Токен для отмены операции</param>
     /// <returns>Статус-код</returns>
     [HttpDelete("{id:int}")]
     [ProducesResponseType(204)]

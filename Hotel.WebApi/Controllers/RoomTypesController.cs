@@ -1,5 +1,6 @@
 ﻿using Hotel.Application.Contracts.RoomType;
 using Microsoft.AspNetCore.Mvc;
+using System.ComponentModel;
 
 namespace Hotel.WebAPI.Controllers;
 
@@ -14,6 +15,7 @@ public class RoomTypesController(IRoomTypeService roomTypeService) : ControllerB
     /// <summary>
     /// Получение всех типов комнат
     /// </summary>
+    /// <param name="ct">Токен для отмены операции</param>
     /// <returns>Коллекция типов комнат</returns>
     [HttpGet]
     [ProducesResponseType(typeof(IEnumerable<RoomTypeResponseDto>), 200)]
@@ -24,6 +26,7 @@ public class RoomTypesController(IRoomTypeService roomTypeService) : ControllerB
     /// Получение информации  о типе комнат
     /// </summary>
     /// <param name="id">Id типа</param>
+    /// <param name="ct">Токен для отмены операции</param>
     /// <returns>Тип комнат</returns>
     [HttpGet("{id:int}")]
     [ProducesResponseType(typeof(RoomTypeResponseDto), 200)]
@@ -37,6 +40,7 @@ public class RoomTypesController(IRoomTypeService roomTypeService) : ControllerB
     /// <summary>
     /// Создание типа комнат
     /// </summary>
+    /// <param name="ct">Токен для отмены операции</param>
     /// <param name="dto">DTO для создания типа</param>
     /// <returns>Созданный тип кимнат</returns>
     [HttpPost]
@@ -52,6 +56,7 @@ public class RoomTypesController(IRoomTypeService roomTypeService) : ControllerB
     /// </summary>
     /// <param name="id">Id типа</param>
     /// <param name="dto">DTO для обновления типа</param>
+    /// <param name="ct">Токен для отмены операции</param>
     /// <returns>обновлённый тип комнат</returns>
     [HttpPut("{id:int}")]
     [ProducesResponseType(typeof(RoomTypeResponseDto), 200)]
@@ -66,6 +71,7 @@ public class RoomTypesController(IRoomTypeService roomTypeService) : ControllerB
     /// Удаления типа комнат
     /// </summary>
     /// <param name="id">Id типа</param>
+    /// <param name="ct">Токен для отмены операции</param>
     /// <returns>статус-код</returns>
     [HttpDelete("{id:int}")]
     [ProducesResponseType(204)]

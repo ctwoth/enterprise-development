@@ -15,16 +15,18 @@ public class ClientsController(IClientService clientService) : ControllerBase
     /// <summary>
     /// Получение всех клиентов в таблице
     /// </summary>
+    /// <param name="ct">Токен для отмены операции</param>
     /// <returns>Коллекция клиентов</returns>
     [HttpGet]
     [ProducesResponseType(typeof(IEnumerable<ClientResponseDto>), 200)]
     public async Task<IActionResult> GetAll(CancellationToken ct)
         => Ok(await clientService.GetAllAsync(ct));
-    
+
     /// <summary>
     /// Получение информации о клиенте
     /// </summary>
     /// <param name="id">Id клиента</param>
+    /// <param name="ct">Токен для отмены операции</param>
     /// <returns>Клиент</returns>
     [HttpGet("{id:int}")]
     [ProducesResponseType(typeof(ClientResponseDto), 200)]
@@ -34,10 +36,11 @@ public class ClientsController(IClientService clientService) : ControllerBase
         var result = await clientService.GetByIdAsync(id, ct);
         return result is null ? NotFound() : Ok(result);
     }
-    
+
     /// <summary>
     /// Создание клиента
     /// </summary>
+    /// <param name="ct">Токен для отмены операции</param>
     /// <param name="dto">DTO для создания клиента</param>
     /// <returns>Созданный клиент</returns>
     [HttpPost]
@@ -47,11 +50,12 @@ public class ClientsController(IClientService clientService) : ControllerBase
         var created = await clientService.CreateAsync(dto, ct);
         return CreatedAtAction(nameof(GetById), new { id = created.Id }, created);
     }
-    
+
     /// <summary>
     /// Обновление информации о клиенте
     /// </summary>
     /// <param name="id">Id клиента</param>
+    /// <param name="ct">Токен для отмены операции</param>
     /// <param name="dto">DTO для обновления клиента</param>
     /// <returns>Обновлённый клиент</returns>
     [HttpPut("{id:int}")]
@@ -62,11 +66,12 @@ public class ClientsController(IClientService clientService) : ControllerBase
         var updated = await clientService.UpdateAsync(id, dto, ct);
         return updated is null ? NotFound() : Ok(updated);
     }
-    
+
     /// <summary>
     /// Удаление клиента
     /// </summary>
     /// <param name="id">Id клиента</param>
+    /// <param name="ct">Токен для отмены операции</param>
     /// <returns>Стутс-код</returns>
     [HttpDelete("{id:int}")]
     [ProducesResponseType(204)]

@@ -1,4 +1,5 @@
-﻿using Hotel.Application.Contracts.Room;
+﻿using Hotel.Application.Contracts.Client;
+using Hotel.Application.Contracts.Room;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Hotel.WebAPI.Controllers;
@@ -14,10 +15,9 @@ public class RoomsController(IRoomService roomService) : ControllerBase
     /// <summary>
     /// Получение всех номеров
     /// </summary>
-    /// <param name="ct">Токен для отмены операции</param>
     /// <returns>Коллекция номеров</returns>
     [HttpGet]
-    [ProducesResponseType(200)]
+    [ProducesResponseType(typeof(IEnumerable<RoomResponseDto>), 200)]
     public async Task<IActionResult> GetAll(CancellationToken ct)
         => Ok(await roomService.GetAllAsync(ct));
     
@@ -25,10 +25,9 @@ public class RoomsController(IRoomService roomService) : ControllerBase
     /// Получение информации о номере
     /// </summary>
     /// <param name="id">Id номера</param>
-    /// <param name="ct">Токен для отмены операции</param>
     /// <returns>Номер</returns>
     [HttpGet("{id}")]
-    [ProducesResponseType(200)]
+    [ProducesResponseType(typeof(RoomResponseDto), 200)]
     [ProducesResponseType(404)]
     public async Task<IActionResult> GetById(int id, CancellationToken ct)
     {
@@ -40,10 +39,9 @@ public class RoomsController(IRoomService roomService) : ControllerBase
     /// Создание номера
     /// </summary>
     /// <param name="dto">DTO для создания номеров</param>
-    /// <param name="ct">Токен для отмены операции</param>
     /// <returns>Созданный номер</returns>
     [HttpPost]
-    [ProducesResponseType(201)]
+    [ProducesResponseType(typeof(RoomResponseDto), 201)]
     public async Task<IActionResult> Create(RoomCreateUpdateDto dto, CancellationToken ct)
     {
         var created = await roomService.CreateAsync(dto, ct);
@@ -55,10 +53,9 @@ public class RoomsController(IRoomService roomService) : ControllerBase
     /// </summary>
     /// <param name="id">Id комнаты</param>
     /// <param name="dto">DTO для обновления номеров</param>
-    /// <param name="ct">Токен для отмены операции</param>
     /// <returns>Обновлённый номер</returns>
     [HttpPut("{id}")]
-    [ProducesResponseType(200)]
+    [ProducesResponseType(typeof(RoomResponseDto), 200)]
     [ProducesResponseType(404)]
     public async Task<IActionResult> Update(int id, RoomCreateUpdateDto dto, CancellationToken ct)
     {
@@ -70,7 +67,6 @@ public class RoomsController(IRoomService roomService) : ControllerBase
     /// Удаление номера
     /// </summary>
     /// <param name="id">Id номера</param>
-    /// <param name="ct">Токен для отмены операции</param>
     /// <returns>Статус-код</returns>
     [HttpDelete("{id}")]
     [ProducesResponseType(204)]

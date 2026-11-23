@@ -1,4 +1,5 @@
 ﻿using Hotel.Application.Contracts.Booking;
+using Hotel.Application.Mappers;
 using Hotel.Domain.Entities;
 
 namespace Hotel.Application.Mappers;
@@ -10,12 +11,8 @@ public static class BookingMapper
 {
     public static BookingResponseDto ToDto(Booking b) => new(
         b.Id,
-        b.Client.Id,
-        b.Client.Name,
-        b.Client.Surname,
-        b.Client.Patronymic,
-        b.Room.Id,
-        b.Room.Number,
+        ClientMapper.ToDto(b.Client),
+        RoomMapper.ToDto(b.Room),
         b.CheckInDate,
         b.DaysOfStay,
         b.TotalPrice

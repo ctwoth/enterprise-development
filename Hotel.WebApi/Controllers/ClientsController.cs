@@ -1,4 +1,5 @@
-﻿using Hotel.Application.Contracts.Client;
+﻿using Hotel.Application.Contracts.Booking;
+using Hotel.Application.Contracts.Client;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Hotel.WebAPI.Controllers;
@@ -14,10 +15,9 @@ public class ClientsController(IClientService clientService) : ControllerBase
     /// <summary>
     /// Получение всех клиентов в таблице
     /// </summary>
-    /// <param name="ct">Токен для отмены операции</param>
     /// <returns>Коллекция клиентов</returns>
     [HttpGet]
-    [ProducesResponseType(200)]
+    [ProducesResponseType(typeof(IEnumerable<ClientResponseDto>), 200)]
     public async Task<IActionResult> GetAll(CancellationToken ct)
         => Ok(await clientService.GetAllAsync(ct));
     
@@ -25,10 +25,9 @@ public class ClientsController(IClientService clientService) : ControllerBase
     /// Получение информации о клиенте
     /// </summary>
     /// <param name="id">Id клиента</param>
-    /// <param name="ct">Токен для отмены операции</param>
     /// <returns>Клиент</returns>
     [HttpGet("{id}")]
-    [ProducesResponseType(200)]
+    [ProducesResponseType(typeof(ClientResponseDto), 200)]
     [ProducesResponseType(404)]
     public async Task<IActionResult> GetById(int id, CancellationToken ct)
     {
@@ -40,10 +39,9 @@ public class ClientsController(IClientService clientService) : ControllerBase
     /// Создание клиента
     /// </summary>
     /// <param name="dto">DTO для создания клиента</param>
-    /// <param name="ct">Токен для отмены операции</param>
     /// <returns>Созданный клиент</returns>
     [HttpPost]
-    [ProducesResponseType(201)]
+    [ProducesResponseType(typeof(ClientResponseDto), 201)]
     public async Task<IActionResult> Create(ClientCreateUpdateDto dto, CancellationToken ct)
     {
         var created = await clientService.CreateAsync(dto, ct);
@@ -55,10 +53,9 @@ public class ClientsController(IClientService clientService) : ControllerBase
     /// </summary>
     /// <param name="id">Id клиента</param>
     /// <param name="dto">DTO для обновления клиента</param>
-    /// <param name="ct">Токен для отмены операции</param>
     /// <returns>Обновлённый клиент</returns>
     [HttpPut("{id}")]
-    [ProducesResponseType(200)]
+    [ProducesResponseType(typeof(ClientResponseDto), 200)]
     [ProducesResponseType(404)]
     public async Task<IActionResult> Update(int id, ClientCreateUpdateDto dto, CancellationToken ct)
     {
@@ -70,7 +67,6 @@ public class ClientsController(IClientService clientService) : ControllerBase
     /// Удаление клиента
     /// </summary>
     /// <param name="id">Id клиента</param>
-    /// <param name="ct">Токен для отмены операции</param>
     /// <returns>Стутс-код</returns>
     [HttpDelete("{id}")]
     [ProducesResponseType(204)]

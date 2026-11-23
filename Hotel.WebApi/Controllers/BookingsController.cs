@@ -14,10 +14,9 @@ public class BookingsController(IBookingService bookingService) : ControllerBase
     /// <summary>
     /// Получение всех записей в таблице бронирований
     /// </summary>
-    /// <param name="ct">Токен для отмены операции</param>
     /// <returns>Список бронирований</returns>
     [HttpGet]
-    [ProducesResponseType(200)]
+    [ProducesResponseType(typeof(IEnumerable<BookingResponseDto>), 200)]
     public async Task<IActionResult> GetAll(CancellationToken ct)
         => Ok(await bookingService.GetAllAsync(ct));
     
@@ -25,10 +24,9 @@ public class BookingsController(IBookingService bookingService) : ControllerBase
     /// Получение записи о брони
     /// </summary>
     /// <param name="id">Id бронирования</param>
-    /// <param name="ct">Токен для отмены операции</param>
     /// <returns>Запись бронирования</returns>
     [HttpGet("{id}")]
-    [ProducesResponseType(200)]
+    [ProducesResponseType(typeof(BookingResponseDto), 200)]
     [ProducesResponseType(404)]
     public async Task<IActionResult> GetById(int id, CancellationToken ct)
     {
@@ -40,10 +38,9 @@ public class BookingsController(IBookingService bookingService) : ControllerBase
     /// Создание записи о бронировании
     /// </summary>
     /// <param name="dto">DTO для создания бронирования</param>
-    /// <param name="ct">Токен для отмены операции</param>
     /// <returns>Созданная запись о брони</returns>
     [HttpPost]
-    [ProducesResponseType(201)]
+    [ProducesResponseType(typeof(BookingResponseDto), 201)]
     public async Task<IActionResult> Create(BookingCreateUpdateDto dto, CancellationToken ct)
     {
         var created = await bookingService.CreateAsync(dto, ct);
@@ -55,10 +52,9 @@ public class BookingsController(IBookingService bookingService) : ControllerBase
     /// </summary>
     /// <param name="id">Id брони</param>
     /// <param name="dto">DTO для обновления бронирований</param>
-    /// <param name="ct">Токен для отмены операции</param>
     /// <returns>Обновлённая бронь</returns>
     [HttpPut("{id}")]
-    [ProducesResponseType(200)]
+    [ProducesResponseType(typeof(BookingResponseDto), 200)]
     [ProducesResponseType(404)]
     public async Task<IActionResult> Update(int id, BookingCreateUpdateDto dto, CancellationToken ct)
     {
@@ -70,7 +66,6 @@ public class BookingsController(IBookingService bookingService) : ControllerBase
     /// Удаление брони
     /// </summary>
     /// <param name="id">Id брони</param>
-    /// <param name="ct">Токен для отмены операции</param>
     /// <returns>Статус-код</returns>
     [HttpDelete("{id}")]
     [ProducesResponseType(204)]

@@ -13,9 +13,7 @@ public static class RoomMapper
         r.Number,
         r.Floor,
         r.HasBalcony,
-        r.Type.Id,
-        r.Type.Category,
-        r.Type.DayPrice
+        RoomTypeMapper.ToDto(r.Type)
     );
     public static Room ToEntity(RoomCreateUpdateDto dto, RoomType type) => new()
     {

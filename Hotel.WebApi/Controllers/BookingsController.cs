@@ -49,12 +49,13 @@ public class BookingsController(IBookingService bookingService) : ControllerBase
         var created = await bookingService.CreateAsync(dto, ct);
         return CreatedAtAction(nameof(GetById), new { id = created.Id }, created);
     }
-   
+
     /// <summary>
     /// Обновление записи бронирования
     /// </summary>
     /// <param name="id">Id брони</param>
     /// <param name="dto">DTO для обновления бронирований</param>
+    /// <param name="ct">Токен для отмены операции</param>
     /// <returns>Обновлённая бронь</returns>
     [HttpPut("{id:int}")]
     [ProducesResponseType(typeof(BookingResponseDto), 200)]

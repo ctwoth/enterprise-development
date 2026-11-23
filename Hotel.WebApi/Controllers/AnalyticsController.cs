@@ -20,9 +20,18 @@ public class AnalyticsController(IAnalyticsService analyticsService) : Controlle
     /// <returns>Коллекция клиентов</returns>
     [HttpGet("clients-by-room-type/{category}")]
     [ProducesResponseType(typeof(ClientsByRoomTypeDto), 200)]
-    public async Task<IActionResult> GetClientsByRoomType(RoomCategory category, CancellationToken ct)
-        => Ok(await analyticsService.GetClientsByRoomTypeAsync(category, ct));
-    
+    [ProducesResponseType(400)]
+    public async Task<IActionResult> GetClientsByRoomType(string category, CancellationToken ct)
+    {
+        if (!Enum.TryParse<RoomCategory>(category, true, out var roomCategory))
+        {
+            return BadRequest($"Категории '{category}' не существует.");
+        }
+
+        var result = await analyticsService.GetClientsByRoomTypeAsync(roomCategory, ct);
+        return Ok(result);
+    }
+
     /// <summary>
     /// Получение списка текущих аренд
     /// </summary>

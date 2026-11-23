@@ -26,7 +26,7 @@ public class ClientsController(IClientService clientService) : ControllerBase
     /// </summary>
     /// <param name="id">Id клиента</param>
     /// <returns>Клиент</returns>
-    [HttpGet("{id}")]
+    [HttpGet("{id:int}")]
     [ProducesResponseType(typeof(ClientResponseDto), 200)]
     [ProducesResponseType(404)]
     public async Task<IActionResult> GetById(int id, CancellationToken ct)
@@ -54,7 +54,7 @@ public class ClientsController(IClientService clientService) : ControllerBase
     /// <param name="id">Id клиента</param>
     /// <param name="dto">DTO для обновления клиента</param>
     /// <returns>Обновлённый клиент</returns>
-    [HttpPut("{id}")]
+    [HttpPut("{id:int}")]
     [ProducesResponseType(typeof(ClientResponseDto), 200)]
     [ProducesResponseType(404)]
     public async Task<IActionResult> Update(int id, ClientCreateUpdateDto dto, CancellationToken ct)
@@ -68,7 +68,7 @@ public class ClientsController(IClientService clientService) : ControllerBase
     /// </summary>
     /// <param name="id">Id клиента</param>
     /// <returns>Стутс-код</returns>
-    [HttpDelete("{id}")]
+    [HttpDelete("{id:int}")]
     [ProducesResponseType(204)]
     [ProducesResponseType(404)]
     public async Task<IActionResult> Delete(int id, CancellationToken ct)

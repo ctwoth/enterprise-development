@@ -7,6 +7,7 @@ using Hotel.Application.Services;
 using Hotel.Domain;
 using Hotel.Infrastructure;
 using Hotel.ServiceDefaults;
+using Hotel.WebApi.Middleware;
 using Microsoft.EntityFrameworkCore;
 using System.Text.Json.Serialization;
 
@@ -41,6 +42,8 @@ builder.Services.AddControllers()
 builder.Services.AddOpenApi();
 
 var app = builder.Build();
+
+app.UseMiddleware<ExceptionHandlingMiddleware>();
 
 app.MapOpenApi();
 

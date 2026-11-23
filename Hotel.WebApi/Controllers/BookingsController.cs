@@ -25,7 +25,7 @@ public class BookingsController(IBookingService bookingService) : ControllerBase
     /// </summary>
     /// <param name="id">Id бронирования</param>
     /// <returns>Запись бронирования</returns>
-    [HttpGet("{id}")]
+    [HttpGet("{id:int}")]
     [ProducesResponseType(typeof(BookingResponseDto), 200)]
     [ProducesResponseType(404)]
     public async Task<IActionResult> GetById(int id, CancellationToken ct)
@@ -53,7 +53,7 @@ public class BookingsController(IBookingService bookingService) : ControllerBase
     /// <param name="id">Id брони</param>
     /// <param name="dto">DTO для обновления бронирований</param>
     /// <returns>Обновлённая бронь</returns>
-    [HttpPut("{id}")]
+    [HttpPut("{id:int}")]
     [ProducesResponseType(typeof(BookingResponseDto), 200)]
     [ProducesResponseType(404)]
     public async Task<IActionResult> Update(int id, BookingCreateUpdateDto dto, CancellationToken ct)
@@ -67,7 +67,7 @@ public class BookingsController(IBookingService bookingService) : ControllerBase
     /// </summary>
     /// <param name="id">Id брони</param>
     /// <returns>Статус-код</returns>
-    [HttpDelete("{id}")]
+    [HttpDelete("{id:int}")]
     [ProducesResponseType(204)]
     [ProducesResponseType(404)]
     public async Task<IActionResult> Delete(int id, CancellationToken ct)

@@ -29,7 +29,7 @@ GET {{host}}/api/Analytics/current-bookings
 Accept: application/json
 
 ### Клиенты, проживавшие в номерах категории Standart
-GET {{host}}/api/Analytics/clients-by-room-type/1
+GET {{host}}/api/Analytics/clients-by-room-type/Standart
 Accept: application/json
 
 ### Топ-5 часто бронируемых номеров

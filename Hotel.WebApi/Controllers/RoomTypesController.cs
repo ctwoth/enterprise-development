@@ -25,7 +25,7 @@ public class RoomTypesController(IRoomTypeService roomTypeService) : ControllerB
     /// </summary>
     /// <param name="id">Id типа</param>
     /// <returns>Тип комнат</returns>
-    [HttpGet("{id}")]
+    [HttpGet("{id:int}")]
     [ProducesResponseType(typeof(RoomTypeResponseDto), 200)]
     [ProducesResponseType(404)]
     public async Task<IActionResult> GetById(int id, CancellationToken ct)
@@ -53,7 +53,7 @@ public class RoomTypesController(IRoomTypeService roomTypeService) : ControllerB
     /// <param name="id">Id типа</param>
     /// <param name="dto">DTO для обновления типа</param>
     /// <returns>обновлённый тип комнат</returns>
-    [HttpPut("{id}")]
+    [HttpPut("{id:int}")]
     [ProducesResponseType(typeof(RoomTypeResponseDto), 200)]
     [ProducesResponseType(404)]
     public async Task<IActionResult> Update(int id, RoomTypeCreateUpdateDto dto, CancellationToken ct)
@@ -67,7 +67,7 @@ public class RoomTypesController(IRoomTypeService roomTypeService) : ControllerB
     /// </summary>
     /// <param name="id">Id типа</param>
     /// <returns>статус-код</returns>
-    [HttpDelete("{id}")]
+    [HttpDelete("{id:int}")]
     [ProducesResponseType(204)]
     [ProducesResponseType(404)]
     public async Task<IActionResult> Delete(int id, CancellationToken ct)

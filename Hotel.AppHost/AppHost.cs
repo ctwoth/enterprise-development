@@ -7,7 +7,7 @@ var migrationService = builder.AddProject<Projects.Hotel_MigrationService>("migr
     .WithReference(hotelDb)
     .WaitFor(hotelDb);
 
-var apiService = builder.AddProject<Projects.Hotel_WebAPI>("apiservice")
+var apiService = builder.AddProject<Projects.Hotel_WebApi>("apiservice")
     .WithReference(hotelDb)
     .WaitForCompletion(migrationService);
 

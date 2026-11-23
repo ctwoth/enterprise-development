@@ -7,7 +7,8 @@ var builder = Host.CreateApplicationBuilder(args);
 builder.Services.AddDbContext<HotelDbContext>(options =>
 {
     var connectionString = builder.Configuration.GetConnectionString("hoteldb");
-    options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
+    options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString))
+        .UseSnakeCaseNamingConvention();
 });
 
 builder.Services.AddHostedService<Worker>();

@@ -12,7 +12,7 @@ public class HotelDbContextFactory : IDesignTimeDbContextFactory<HotelDbContext>
         optionsBuilder.UseMySql(
             "Server=localhost;Database=hoteldb;User=root;Password=design-time-only;",
             new MySqlServerVersion(new Version(9, 7, 0))
-        );
+        ).UseSnakeCaseNamingConvention();
 
         return new HotelDbContext(optionsBuilder.Options);
     }

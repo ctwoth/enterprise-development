@@ -26,31 +26,38 @@ namespace Hotel.Infrastructure.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("id");
 
                     MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<DateOnly>("CheckInDate")
-                        .HasColumnType("date");
+                        .HasColumnType("date")
+                        .HasColumnName("check_in_date");
 
                     b.Property<int>("ClientId")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("client_id");
 
                     b.Property<uint>("DaysOfStay")
-                        .HasColumnType("int unsigned");
+                        .HasColumnType("int unsigned")
+                        .HasColumnName("days_of_stay");
 
                     b.Property<int>("RoomId")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("room_id");
 
-                    b.HasKey("Id");
+                    b.HasKey("Id")
+                        .HasName("pk_bookings");
 
-                    b.HasIndex("ClientId");
+                    b.HasIndex("ClientId")
+                        .HasDatabaseName("ix_bookings_client_id");
 
                     b.HasIndex("RoomId", "CheckInDate")
                         .IsUnique()
                         .HasDatabaseName("idx_Bookings_Room_CheckInDate");
 
-                    b.ToTable("Bookings");
+                    b.ToTable("bookings", (string)null);
 
                     b.HasData(
                         new
@@ -179,38 +186,47 @@ namespace Hotel.Infrastructure.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("id");
 
                     MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<DateOnly>("BirthDate")
-                        .HasColumnType("date");
+                        .HasColumnType("date")
+                        .HasColumnName("birth_date");
 
                     b.Property<string>("Citizenship")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasColumnType("longtext")
+                        .HasColumnName("citizenship");
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasColumnType("longtext")
+                        .HasColumnName("name");
 
                     b.Property<string>("PassportNumber")
                         .IsRequired()
-                        .HasColumnType("varchar(255)");
+                        .HasColumnType("varchar(255)")
+                        .HasColumnName("passport_number");
 
                     b.Property<string>("Patronymic")
-                        .HasColumnType("longtext");
+                        .HasColumnType("longtext")
+                        .HasColumnName("patronymic");
 
                     b.Property<string>("Surname")
                         .IsRequired()
-                        .HasColumnType("longtext");
+                        .HasColumnType("longtext")
+                        .HasColumnName("surname");
 
-                    b.HasKey("Id");
+                    b.HasKey("Id")
+                        .HasName("pk_clients");
 
                     b.HasIndex("PassportNumber")
-                        .IsUnique();
+                        .IsUnique()
+                        .HasDatabaseName("ix_clients_passport_number");
 
-                    b.ToTable("Clients");
+                    b.ToTable("clients", (string)null);
 
                     b.HasData(
                         new
@@ -318,27 +334,34 @@ namespace Hotel.Infrastructure.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("id");
 
                     MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<uint>("Floor")
-                        .HasColumnType("int unsigned");
+                        .HasColumnType("int unsigned")
+                        .HasColumnName("floor");
 
                     b.Property<bool>("HasBalcony")
-                        .HasColumnType("tinyint(1)");
+                        .HasColumnType("tinyint(1)")
+                        .HasColumnName("has_balcony");
 
                     b.Property<uint>("Number")
-                        .HasColumnType("int unsigned");
+                        .HasColumnType("int unsigned")
+                        .HasColumnName("number");
 
                     b.Property<int>("RoomTypeId")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("room_type_id");
 
-                    b.HasKey("Id");
+                    b.HasKey("Id")
+                        .HasName("pk_rooms");
 
-                    b.HasIndex("RoomTypeId");
+                    b.HasIndex("RoomTypeId")
+                        .HasDatabaseName("ix_rooms_room_type_id");
 
-                    b.ToTable("Rooms");
+                    b.ToTable("rooms", (string)null);
 
                     b.HasData(
                         new
@@ -427,31 +450,39 @@ namespace Hotel.Infrastructure.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("id");
 
                     MySqlPropertyBuilderExtensions.UseMySqlIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<double>("Area")
-                        .HasColumnType("double");
+                        .HasColumnType("double")
+                        .HasColumnName("area");
 
                     b.Property<uint>("Beds")
-                        .HasColumnType("int unsigned");
+                        .HasColumnType("int unsigned")
+                        .HasColumnName("beds");
 
                     b.Property<int>("Category")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("category");
 
                     b.Property<double>("DayPrice")
-                        .HasColumnType("double");
+                        .HasColumnType("double")
+                        .HasColumnName("day_price");
 
                     b.Property<bool>("HasBath")
-                        .HasColumnType("tinyint(1)");
+                        .HasColumnType("tinyint(1)")
+                        .HasColumnName("has_bath");
 
                     b.Property<bool>("HasShower")
-                        .HasColumnType("tinyint(1)");
+                        .HasColumnType("tinyint(1)")
+                        .HasColumnName("has_shower");
 
-                    b.HasKey("Id");
+                    b.HasKey("Id")
+                        .HasName("pk_room_types");
 
-                    b.ToTable("RoomTypes");
+                    b.ToTable("room_types", (string)null);
 
                     b.HasData(
                         new
@@ -562,13 +593,15 @@ namespace Hotel.Infrastructure.Migrations
                         .WithMany()
                         .HasForeignKey("ClientId")
                         .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .IsRequired()
+                        .HasConstraintName("fk_bookings_clients_client_id");
 
                     b.HasOne("Hotel.Domain.Entities.Room", "Room")
                         .WithMany()
                         .HasForeignKey("RoomId")
                         .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .IsRequired()
+                        .HasConstraintName("fk_bookings_rooms_room_id");
 
                     b.Navigation("Client");
 
@@ -581,7 +614,8 @@ namespace Hotel.Infrastructure.Migrations
                         .WithMany()
                         .HasForeignKey("RoomTypeId")
                         .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .IsRequired()
+                        .HasConstraintName("fk_rooms_room_types_room_type_id");
 
                     b.Navigation("Type");
                 });

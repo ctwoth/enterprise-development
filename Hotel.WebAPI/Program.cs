@@ -16,7 +16,8 @@ builder.AddServiceDefaults();
 builder.Services.AddDbContext<HotelDbContext>(options =>
 {
     var connectionString = builder.Configuration.GetConnectionString("hoteldb");
-    options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString));
+    options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString))
+    .UseSnakeCaseNamingConvention();
 });
 
 builder.Services.AddScoped(typeof(IRepository<,>), typeof(EfRepository<,>));

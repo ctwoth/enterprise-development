@@ -1,8 +1,11 @@
 using Hotel.Infrastructure;
 using Hotel.MigrationService;
 using Microsoft.EntityFrameworkCore;
+using Hotel.ServiceDefaults;
 
 var builder = Host.CreateApplicationBuilder(args);
+
+builder.AddServiceDefaults();
 
 builder.Services.AddDbContext<HotelDbContext>(options =>
 {

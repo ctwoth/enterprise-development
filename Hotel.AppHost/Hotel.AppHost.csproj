@@ -10,12 +10,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Aspire.Hosting.MySql" Version="17.0.0" />
+    <PackageReference Include="Aspire.Hosting.MySql" Version="13.6.5" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Hotel.MigrationService\Hotel.MigrationService.csproj" />
-    <ProjectReference Include="..\Hotel.WebAPI\Hotel.WebAPI.csproj" />
+    <ProjectReference Include="..\Hotel.WebApi\Hotel.WebApi.csproj" />
   </ItemGroup>
 
 </Project>

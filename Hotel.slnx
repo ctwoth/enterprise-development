@@ -8,5 +8,5 @@
   <Project Path="Hotel.MigrationService/Hotel.MigrationService.csproj" Id="d4683acf-e70b-45b5-af19-1ab160283537" />
   <Project Path="Hotel.ServiceDefaults/Hotel.ServiceDefaults.csproj" />
   <Project Path="Hotel.Tests/Hotel.Tests.csproj" />
-  <Project Path="Hotel.WebAPI/Hotel.WebAPI.csproj" Id="1f088ad4-34b9-4f7e-b097-9cf455fcde8e" />
+  <Project Path="Hotel.WebApi/Hotel.WebApi.csproj" Id="1f088ad4-34b9-4f7e-b097-9cf455fcde8e" />
 </Solution>
